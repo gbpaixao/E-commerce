@@ -7,7 +7,6 @@ import {
   FormText,
 } from 'react-bootstrap';
 
-import './styles.css';
 import loginImg from '../../assets/login.jpg';
 
 export function Login(): JSX.Element {
