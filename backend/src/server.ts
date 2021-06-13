@@ -5,6 +5,6 @@ server.get("/", (request, response) => {
   return response.send("e-commerce api");
 });
 
-server.listen(3030);
+server.listen(process.env.PORT || 3333);
 
 export default server
