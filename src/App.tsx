@@ -1,8 +1,9 @@
 import { Login } from './pages/Login';
+import { Carrinho } from './pages/Carrinho';
 
 function App() {
   return (
-    <Login />
+    <Carrinho />
   );
 }
 
