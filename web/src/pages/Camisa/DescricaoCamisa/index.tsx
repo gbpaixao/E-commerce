@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
@@ -6,16 +6,30 @@ import { Layout } from '../../../components/Layout';
 import Camisa from '../../../assets/camisa3.jpg';
 import './styles.css';
 import ButtonGroup from '../../../components/ButtonGroup';
+import ItemsAmount from '../../../components/ItemsAmount';
 
 export default function DescricaoCamisa():JSX.Element {
-  /* Lógica dos botões de tamanho */
-  const arrayButton = ['P', 'M', 'G'];
-  const [selectedButton, setSelectedButton] = useState<boolean[]>(
-    Array.from<boolean>({ length: arrayButton.length }).fill(false),
+  /* Tamanho */
+  const arrayTamanhos = ['P', 'M', 'G'];
+  const [tamanho, setTamanho] = useState<boolean[]>(
+    Array.from<boolean>({ length: arrayTamanhos.length }).fill(false),
   );
-  const handleCallBack = (childData: boolean[]) => {
-    setSelectedButton(childData);
+  const handleCallbackTamanho = (childData: boolean[]) => {
+    setTamanho(childData);
   };
+
+  /* Quantidade */
+  const [estoque, setEstoque] = useState<number>(23);
+  const [quantidade, setQuantidade] = useState<number>(1);
+  const handleCallbackQuantidade = (childData: number) => {
+    setQuantidade(childData);
+  };
+
+  useEffect(() => console.log('quantidade', quantidade),
+    [quantidade]);
+
+  useEffect(() => console.log('tamanho', tamanho),
+    [tamanho]);
 
   return (
     <Layout>
@@ -69,7 +83,7 @@ export default function DescricaoCamisa():JSX.Element {
             <Form.Group controlId="tamanho-camisa">
               <Form.Label><b>Tamanho</b></Form.Label>
               <br />
-              <ButtonGroup array={arrayButton} parentCallback={handleCallBack} />
+              <ButtonGroup array={arrayTamanhos} parentCallback={handleCallbackTamanho} />
             </Form.Group>
 
             <div id="description-container-input-group">
@@ -97,8 +111,14 @@ export default function DescricaoCamisa():JSX.Element {
             <div>
               <Form.Group controlId="quantidade-camisa">
                 <Form.Label>Quantidade</Form.Label>
-                <Form.Control aria-label="quantidade-camisa" placeholder="1" />
-                <Form.Text><small>24 unidades restantes</small></Form.Text>
+                <ItemsAmount estoque={estoque} parentCallback={handleCallbackQuantidade} />
+                <Form.Text>
+                  <small>
+                    {estoque}
+                    {' '}
+                    unidades restantes
+                  </small>
+                </Form.Text>
               </Form.Group>
             </div>
 
