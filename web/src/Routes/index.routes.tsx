@@ -3,13 +3,13 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from '../pages/Home';
-import Camisa from '../pages/Camisa';
+import CamisaRoutes from './camisa.routes';
 
 const Routes = ():JSX.Element => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/camisa" component={Camisa} />
+      <CamisaRoutes />
     </Switch>
   </BrowserRouter>
 );

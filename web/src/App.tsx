@@ -1,4 +1,4 @@
-import Routes from './Routes';
+import Routes from './Routes/index.routes';
 import './server';
 
 function App(): JSX.Element {
