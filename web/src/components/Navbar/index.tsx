@@ -9,6 +9,7 @@ import {
   Row,
 } from 'react-bootstrap';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
+import Avatar from '../../assets/avatar.jpg';
 
 export function Navbar(): JSX.Element {
   return (
@@ -32,6 +33,7 @@ export function Navbar(): JSX.Element {
             <FormControl
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              style={{ width: 400 }}
             />
             <InputGroup.Append>
               <Button style={{ background: '#F8D7DA' }}>
@@ -53,7 +55,7 @@ export function Navbar(): JSX.Element {
 
           <Col xs={6} md={4}>
             <Image
-              src="https://exame.com/wp-content/uploads/2017/04/animal.png?w=640"
+              src={Avatar}
               width={35}
               height={35}
               roundedCircle
