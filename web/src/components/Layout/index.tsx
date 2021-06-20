@@ -13,6 +13,8 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         style={{
           margin: '0 11rem',
           padding: '2.5rem 0',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         {children}
