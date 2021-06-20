@@ -9,7 +9,7 @@ import {
 import loginImg from '../../assets/login.jpg';
 import './styles.css';
 
-export function Cadastro(): JSX.Element {
+export function CadastroProduto(): JSX.Element {
   return (
     <main className="d-flex" style={{ maxWidth: 1366 }}>
       <div
@@ -27,45 +27,40 @@ export function Cadastro(): JSX.Element {
             <h3 className="mb-4">Cadastro</h3>
             <h4 className="mb-5">Seja bem-vindo ao RedsAju</h4>
           </div>
-          <div className="d-flex">
-            <div className="d-table w-50 pd-right-form">
-              <Form>
+          <Form>
+            <div className="d-flex">
+              <div className="d-table w-50 pd-right-form">
                 <FormGroup>
                   <FormControl
-                    type="nome"
+                    type="text"
                     placeholder="Nome"
                     autoFocus
                   />
                 </FormGroup>
-              </Form>
-            </div>
-            <div className="d-table w-50 pd-left-form">
-              <Form>
+              </div>
+              <div className="d-table w-50 pd-left-form">
                 <FormGroup>
                   <FormControl
-                    type="sobrenome"
+                    type="text"
                     placeholder="Sobrenome"
-                    autoFocus
                   />
                 </FormGroup>
-              </Form>
+              </div>
             </div>
-          </div>
 
-          <Form>
             <FormGroup>
               <FormControl
-                type="cpf"
+                type="text"
                 placeholder="CPF"
-                autoFocus
+                maxLength={14}
               />
             </FormGroup>
 
             <FormGroup>
               <FormControl
-                type="telefone"
+                type="tel"
                 placeholder="Telefone"
-                autoFocus
+                maxLength={15}
               />
             </FormGroup>
 
@@ -73,7 +68,6 @@ export function Cadastro(): JSX.Element {
               <FormControl
                 type="email"
                 placeholder="Email"
-                autoFocus
               />
             </FormGroup>
 
@@ -81,7 +75,6 @@ export function Cadastro(): JSX.Element {
               <FormControl
                 type="password"
                 placeholder="Senha"
-                autoFocus
               />
             </FormGroup>
 
@@ -95,7 +88,7 @@ export function Cadastro(): JSX.Element {
             <div
               className="d-flex flex-column justify-content-center"
             >
-              <Button className="mb-3" style={{ background: '#5227CC' }}>Cadastrar</Button>
+              <Button type="submit" className="mb-3" style={{ background: '#5227CC' }}>Cadastrar</Button>
 
               <div className="d-flex text-center justify-content-center">
                 <p className="pr-1" style={{ color: '#6C757D' }}>

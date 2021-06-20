@@ -1,8 +1,8 @@
-import { Cadastro } from './pages/Cadastro';
+import { CadastroProduto } from './pages/CadastroProduto';
 
 function App() {
   return (
-    <Cadastro />
+    <CadastroProduto />
   );
 }
 

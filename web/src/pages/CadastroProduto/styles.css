@@ -1,0 +1,19 @@
+.teste{
+  display:table;
+}
+
+.timage{
+  width: 60%;
+}
+
+section{
+  width: 40%;
+}
+
+.pd-right-form{
+  padding-right: 7.5px;
+}
+
+.pd-left-form{
+  padding-left: 7.5px;
+}
