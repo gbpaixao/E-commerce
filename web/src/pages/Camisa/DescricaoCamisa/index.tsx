@@ -1,11 +1,22 @@
+import { useState } from 'react';
 import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
 import { Layout } from '../../../components/Layout';
 import Camisa from '../../../assets/camisa3.jpg';
 import './styles.css';
+import ButtonGroup from '../../../components/ButtonGroup';
 
 export default function DescricaoCamisa():JSX.Element {
+  /* Lógica dos botões de tamanho */
+  const arrayButton = ['P', 'M', 'G'];
+  const [selectedButton, setSelectedButton] = useState<boolean[]>(
+    Array.from<boolean>({ length: arrayButton.length }).fill(false),
+  );
+  const handleCallBack = (childData: boolean[]) => {
+    setSelectedButton(childData);
+  };
+
   return (
     <Layout>
       <Form>
@@ -58,9 +69,7 @@ export default function DescricaoCamisa():JSX.Element {
             <Form.Group controlId="tamanho-camisa">
               <Form.Label><b>Tamanho</b></Form.Label>
               <br />
-              <button id="tamanho-button" aria-label="Tamanho da Camisa" type="button">P</button>
-              <button id="tamanho-button" aria-label="Tamanho da Camisa" type="button">M</button>
-              <button id="tamanho-button" aria-label="Tamanho da Camisa" type="button">G</button>
+              <ButtonGroup array={arrayButton} parentCallback={handleCallBack} />
             </Form.Group>
 
             <div id="description-container-input-group">
