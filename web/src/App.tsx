@@ -1,6 +1,9 @@
-function App() {
+import Routes from './Routes';
+import './server';
+
+function App(): JSX.Element {
   return (
-    <h1>Hello!</h1>
+    <Routes />
   );
 }
 
