@@ -97,7 +97,7 @@ export default function DescricaoCamisa():JSX.Element {
                   aria-label="nome-jogador"
                   value={camisa.nomeJogador}
                   onChange={
-                    (event: any) => setCamisa({ ...camisa, nomeJogador: event.target.value })
+                    (event) => setCamisa({ ...camisa, nomeJogador: event.target.value })
                   }
                 />
                 <Form.Text><small>Máximo de 12 caracteres</small></Form.Text>
@@ -109,7 +109,7 @@ export default function DescricaoCamisa():JSX.Element {
                   aria-label="numero-jogador"
                   value={camisa.numeroJogador}
                   onChange={
-                    (event: any) => setCamisa({ ...camisa, numeroJogador: event.target.value })
+                    (event) => setCamisa({ ...camisa, numeroJogador: event.target.value })
                   }
                 />
                 <Form.Text><small>Máximo de 2 caracteres</small></Form.Text>
