@@ -3,33 +3,42 @@ import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
 import { Layout } from '../../../components/Layout';
-import Camisa from '../../../assets/camisa3.jpg';
+import CamisaImg from '../../../assets/camisa3.jpg';
 import './styles.css';
 import ButtonGroup from '../../../components/ButtonGroup';
 import ItemsAmount from '../../../components/ItemsAmount';
+import { CamisaData } from '../../../types/Camisa';
 
 export default function DescricaoCamisa():JSX.Element {
-  /* Tamanho */
+  /* Initial State (camisa) */
   const arrayTamanhos = ['P', 'M', 'G'];
-  const [tamanho, setTamanho] = useState<boolean[]>(
-    Array.from<boolean>({ length: arrayTamanhos.length }).fill(false),
-  );
+  const initialState: CamisaData = {
+    nomeCamisa: 'Camisa Básica',
+    descricao:
+    `Camisa Flamengo I 21/22 s/n° Torcedor Adidas Masculina - Vermelho+Preto.
+    Alô, Nação Rubro-Negra! Chegou o novo manto do Mengão para a temporada 21/22.
+    Inspirado no modelo que os craques do Flamengo usaram no “ano de ouro”,
+    a Camisa Flamengo Adidas ...`,
+    valor: 150,
+    tamanho: Array.from<boolean>({ length: arrayTamanhos.length }).fill(false),
+    estoque: 23,
+    quantidade: 1,
+    numeroJogador: '',
+    nomeJogador: '',
+  };
+
+  const [camisa, setCamisa] = useState<CamisaData>({ ...initialState });
+
+  useEffect(() => console.log('camisa', camisa),
+    [camisa]);
+
   const handleCallbackTamanho = (childData: boolean[]) => {
-    setTamanho(childData);
+    setCamisa({ ...camisa, tamanho: childData });
   };
 
-  /* Quantidade */
-  const [estoque, setEstoque] = useState<number>(23);
-  const [quantidade, setQuantidade] = useState<number>(1);
   const handleCallbackQuantidade = (childData: number) => {
-    setQuantidade(childData);
+    setCamisa({ ...camisa, quantidade: childData });
   };
-
-  useEffect(() => console.log('quantidade', quantidade),
-    [quantidade]);
-
-  useEffect(() => console.log('tamanho', tamanho),
-    [tamanho]);
 
   return (
     <Layout>
@@ -38,29 +47,29 @@ export default function DescricaoCamisa():JSX.Element {
           <div id="pictures-container">
             <div id="pictures-container-thumbnails">
               <Image
-                src={Camisa}
+                src={CamisaImg}
                 width={75}
                 height={95}
               />
               <Image
-                src={Camisa}
+                src={CamisaImg}
                 width={75}
                 height={95}
               />
               <Image
-                src={Camisa}
+                src={CamisaImg}
                 width={75}
                 height={95}
               />
               <Image
-                src={Camisa}
+                src={CamisaImg}
                 width={75}
                 height={95}
               />
             </div>
             <div id="pictures-container-main">
               <Image
-                src={Camisa}
+                src={CamisaImg}
                 width={300}
                 height={440}
               />
@@ -68,17 +77,9 @@ export default function DescricaoCamisa():JSX.Element {
           </div>
 
           <div id="description-container">
-            <h1>Nome da Camisa</h1>
+            <h1>{camisa.nomeCamisa}</h1>
 
-            <p>
-              Camisa Flamengo I 21/22 s/n°
-              Torcedor Adidas Masculina - Vermelho+Preto
-              <br />
-              <br />
-              Alô, Nação Rubro-Negra! Chegou o novo manto do Mengão para a temporada 21/22.
-              Inspirado no modelo que os craques do Flamengo usaram no “ano de ouro”,
-              a Camisa Flamengo Adidas ...
-            </p>
+            <p>{camisa.descricao}</p>
 
             <Form.Group controlId="tamanho-camisa">
               <Form.Label><b>Tamanho</b></Form.Label>
@@ -88,14 +89,29 @@ export default function DescricaoCamisa():JSX.Element {
 
             <div id="description-container-input-group">
               <Form.Group controlId="nome-jogador" style={{ width: '200px' }}>
-                <Form.Label><b>Nome Jogador</b></Form.Label>
-                <Form.Control aria-label="nome-jogador" />
+                <Form.Label>
+                  <b>Nome Jogador</b>
+
+                </Form.Label>
+                <Form.Control
+                  aria-label="nome-jogador"
+                  value={camisa.nomeJogador}
+                  onChange={
+                    (event: any) => setCamisa({ ...camisa, nomeJogador: event.target.value })
+                  }
+                />
                 <Form.Text><small>Máximo de 12 caracteres</small></Form.Text>
               </Form.Group>
 
               <Form.Group controlId="numero-jogador" style={{ width: '126px' }}>
                 <Form.Label><b>Nº do Jogador</b></Form.Label>
-                <Form.Control aria-label="numero-jogador" />
+                <Form.Control
+                  aria-label="numero-jogador"
+                  value={camisa.numeroJogador}
+                  onChange={
+                    (event: any) => setCamisa({ ...camisa, numeroJogador: event.target.value })
+                  }
+                />
                 <Form.Text><small>Máximo de 2 caracteres</small></Form.Text>
               </Form.Group>
             </div>
@@ -104,19 +120,17 @@ export default function DescricaoCamisa():JSX.Element {
 
           <div id="shipping-container">
             <div>
-              <h1>R$ 150,00</h1>
-              <small>6x de R$ 25,00</small>
+              <h1>{`R$ ${camisa.valor.toFixed(2).replace('.', ',')}`}</h1>
+              <small>{`6x de R$ ${(camisa.valor / 6).toFixed(2).replace('.', ',')}`}</small>
             </div>
 
             <div>
               <Form.Group controlId="quantidade-camisa">
                 <Form.Label>Quantidade</Form.Label>
-                <ItemsAmount estoque={estoque} parentCallback={handleCallbackQuantidade} />
+                <ItemsAmount estoque={camisa.estoque} parentCallback={handleCallbackQuantidade} />
                 <Form.Text>
                   <small>
-                    {estoque}
-                    {' '}
-                    unidades restantes
+                    {`${camisa.estoque} unidades restantes`}
                   </small>
                 </Form.Text>
               </Form.Group>
