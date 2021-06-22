@@ -2,7 +2,7 @@ export interface ICamisa {
   nomeCamisa: string,
     descricao: string,
     valor: number,
-    tamanho: boolean[],
+    tamanho: string,
     estoque: number,
     quantidade: number,
     numeroJogador: string,

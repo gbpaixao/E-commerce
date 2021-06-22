@@ -7,19 +7,17 @@ import {
 import api from '../../../services/api';
 import { Layout } from '../../../components/Layout';
 import './styles.css';
-import ButtonGroup from '../../../components/ButtonGroup';
 import ItemsAmount from '../../../components/ItemsAmount';
 import { ICamisa } from '../../../types/Camisa';
 import { IParams } from '../../../types/Params';
 
 export default function DescricaoCamisa():JSX.Element {
   /* Initial State */
-  const arrayTamanhos = ['P', 'M', 'G'];
   const [camisa, setCamisa] = useState<ICamisa>({
     nomeCamisa: '',
     descricao: '',
     valor: 0,
-    tamanho: Array.from<boolean>({ length: arrayTamanhos.length }).fill(false),
+    tamanho: '',
     estoque: 0,
     quantidade: 1,
     numeroJogador: '',
@@ -33,11 +31,6 @@ export default function DescricaoCamisa():JSX.Element {
   useEffect(() => {
     api.get(`/camisa/${idCamisa}`).then((res) => setCamisa({ ...res.data[0] }));
   }, [idCamisa]);
-
-  /* Handle Callback */
-  const handleCallbackTamanho = (childData: boolean[]) => {
-    setCamisa({ ...camisa, tamanho: childData });
-  };
 
   const handleCallbackQuantidade = (childData: number) => {
     setCamisa({ ...camisa, quantidade: childData });
@@ -77,7 +70,18 @@ export default function DescricaoCamisa():JSX.Element {
             <Form.Group controlId="tamanho-camisa">
               <Form.Label><b>Tamanho</b></Form.Label>
               <br />
-              <ButtonGroup array={arrayTamanhos} parentCallback={handleCallbackTamanho} />
+              <Button
+                style={{
+                  backgroundColor: '#5227CC',
+                  borderColor: '#5227CC',
+                  boxShadow: 'none',
+                  width: '70px',
+                  cursor: 'default',
+                }}
+              >
+                {camisa.tamanho}
+              </Button>
+
             </Form.Group>
 
             <div id="description-container-input-group">
