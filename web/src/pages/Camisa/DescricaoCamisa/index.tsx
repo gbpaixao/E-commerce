@@ -1,16 +1,17 @@
+/* eslint-disable global-require */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
 import { Layout } from '../../../components/Layout';
-import CamisaImg from '../../../assets/camisa3.jpg';
 import './styles.css';
 import ButtonGroup from '../../../components/ButtonGroup';
 import ItemsAmount from '../../../components/ItemsAmount';
 import { ICamisa } from '../../../types/Camisa';
 import api from '../../../services/api';
 import { IParams } from '../../../types/Params';
+import { names as imgNames, paths as imgPaths } from '../../../assets';
 
 export default function DescricaoCamisa():JSX.Element {
   /* Initial State */
@@ -24,6 +25,8 @@ export default function DescricaoCamisa():JSX.Element {
     quantidade: 1,
     numeroJogador: '',
     nomeJogador: '',
+    pictures: [],
+    mainPicture: '',
   } as ICamisa);
 
   /* Fetch from server */
@@ -41,39 +44,29 @@ export default function DescricaoCamisa():JSX.Element {
     setCamisa({ ...camisa, quantidade: childData });
   };
 
-  useEffect(() => console.log('camisa', camisa),
-    [camisa, setCamisa]);
-
   return (
     <Layout>
       <Form>
         <div id="main-container">
           <div id="pictures-container">
             <div id="pictures-container-thumbnails">
-              <Image
-                src={CamisaImg}
-                width={75}
-                height={95}
-              />
-              <Image
-                src={CamisaImg}
-                width={75}
-                height={95}
-              />
-              <Image
-                src={CamisaImg}
-                width={75}
-                height={95}
-              />
-              <Image
-                src={CamisaImg}
-                width={75}
-                height={95}
-              />
+              {camisa.pictures.map((picture, index) => {
+                const assetIndex = imgNames.indexOf(picture);
+                return (
+                  <Image
+                  // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    src={imgPaths[assetIndex]}
+                    width={75}
+                    height={95}
+                  />
+                );
+              })}
             </div>
             <div id="pictures-container-main">
+
               <Image
-                src={CamisaImg}
+                src={imgPaths[imgNames.indexOf(camisa.mainPicture)]}
                 width={300}
                 height={440}
               />
@@ -160,6 +153,8 @@ export default function DescricaoCamisa():JSX.Element {
             </div>
           </div>
         </div>
+
+        {/* <Dropzone /> */}
       </Form>
     </Layout>
   );

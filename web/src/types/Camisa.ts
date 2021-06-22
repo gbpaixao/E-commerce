@@ -7,4 +7,6 @@ export interface ICamisa {
     quantidade: number,
     numeroJogador: string,
     nomeJogador: string,
+    pictures: string[],
+    mainPicture: string
 }

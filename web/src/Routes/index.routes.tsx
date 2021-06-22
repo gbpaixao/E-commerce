@@ -9,7 +9,9 @@ const Routes = ():JSX.Element => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Home} />
+      {/* <CamisaProvider> */}
       <CamisaRoutes />
+      {/* </CamisaProvider> */}
     </Switch>
   </BrowserRouter>
 );
