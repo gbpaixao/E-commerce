@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
@@ -7,31 +8,31 @@ import CamisaImg from '../../../assets/camisa3.jpg';
 import './styles.css';
 import ButtonGroup from '../../../components/ButtonGroup';
 import ItemsAmount from '../../../components/ItemsAmount';
-import { CamisaData } from '../../../types/Camisa';
+import { ICamisa } from '../../../types/Camisa';
+import api from '../../../services/api';
+import { IParams } from '../../../types/Params';
 
 export default function DescricaoCamisa():JSX.Element {
-  /* Initial State (camisa) */
+  /* Initial State */
   const arrayTamanhos = ['P', 'M', 'G'];
-  const initialState: CamisaData = {
-    nomeCamisa: 'Camisa Básica',
-    descricao:
-    `Camisa Flamengo I 21/22 s/n° Torcedor Adidas Masculina - Vermelho+Preto.
-    Alô, Nação Rubro-Negra! Chegou o novo manto do Mengão para a temporada 21/22.
-    Inspirado no modelo que os craques do Flamengo usaram no “ano de ouro”,
-    a Camisa Flamengo Adidas ...`,
-    valor: 150,
+  const [camisa, setCamisa] = useState<ICamisa>({
+    nomeCamisa: '',
+    descricao: '',
+    valor: 0,
     tamanho: Array.from<boolean>({ length: arrayTamanhos.length }).fill(false),
-    estoque: 23,
+    estoque: 0,
     quantidade: 1,
     numeroJogador: '',
     nomeJogador: '',
-  };
+  } as ICamisa);
 
-  const [camisa, setCamisa] = useState<CamisaData>({ ...initialState });
+  /* Fetch from server */
+  const { id: idCamisa } = useParams<IParams>();
+  useEffect(() => {
+    api.get(`/camisa/${idCamisa}`).then((res) => setCamisa({ ...res.data[0] }));
+  }, [idCamisa]);
 
-  useEffect(() => console.log('camisa', camisa),
-    [camisa]);
-
+  /* Handle Callback */
   const handleCallbackTamanho = (childData: boolean[]) => {
     setCamisa({ ...camisa, tamanho: childData });
   };
@@ -39,6 +40,9 @@ export default function DescricaoCamisa():JSX.Element {
   const handleCallbackQuantidade = (childData: number) => {
     setCamisa({ ...camisa, quantidade: childData });
   };
+
+  useEffect(() => console.log('camisa', camisa),
+    [camisa, setCamisa]);
 
   return (
     <Layout>
@@ -91,7 +95,6 @@ export default function DescricaoCamisa():JSX.Element {
               <Form.Group controlId="nome-jogador" style={{ width: '200px' }}>
                 <Form.Label>
                   <b>Nome Jogador</b>
-
                 </Form.Label>
                 <Form.Control
                   aria-label="nome-jogador"
@@ -99,6 +102,7 @@ export default function DescricaoCamisa():JSX.Element {
                   onChange={
                     (event) => setCamisa({ ...camisa, nomeJogador: event.target.value })
                   }
+                  maxLength={12}
                 />
                 <Form.Text><small>Máximo de 12 caracteres</small></Form.Text>
               </Form.Group>
@@ -111,6 +115,7 @@ export default function DescricaoCamisa():JSX.Element {
                   onChange={
                     (event) => setCamisa({ ...camisa, numeroJogador: event.target.value })
                   }
+                  maxLength={2}
                 />
                 <Form.Text><small>Máximo de 2 caracteres</small></Form.Text>
               </Form.Group>

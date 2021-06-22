@@ -1,4 +1,4 @@
-export interface CamisaData {
+export interface ICamisa {
   nomeCamisa: string,
     descricao: string,
     valor: number,
