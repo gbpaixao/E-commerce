@@ -4,14 +4,13 @@ import { useParams } from 'react-router-dom';
 import {
   Button, Form, Image, InputGroup,
 } from 'react-bootstrap';
+import api from '../../../services/api';
 import { Layout } from '../../../components/Layout';
 import './styles.css';
 import ButtonGroup from '../../../components/ButtonGroup';
 import ItemsAmount from '../../../components/ItemsAmount';
 import { ICamisa } from '../../../types/Camisa';
-import api from '../../../services/api';
 import { IParams } from '../../../types/Params';
-import { names as imgNames, paths as imgPaths } from '../../../assets';
 
 export default function DescricaoCamisa():JSX.Element {
   /* Initial State */
@@ -50,23 +49,20 @@ export default function DescricaoCamisa():JSX.Element {
         <div id="main-container">
           <div id="pictures-container">
             <div id="pictures-container-thumbnails">
-              {camisa.pictures.map((picture, index) => {
-                const assetIndex = imgNames.indexOf(picture);
-                return (
-                  <Image
+              {camisa.pictures.map((picture, index) => (
+                <Image
                   // eslint-disable-next-line react/no-array-index-key
-                    key={index}
-                    src={imgPaths[assetIndex]}
-                    width={75}
-                    height={95}
-                  />
-                );
-              })}
+                  key={index}
+                  src={picture}
+                  width={75}
+                  height={95}
+                />
+              ))}
             </div>
             <div id="pictures-container-main">
 
               <Image
-                src={imgPaths[imgNames.indexOf(camisa.mainPicture)]}
+                src={camisa.mainPicture}
                 width={300}
                 height={440}
               />

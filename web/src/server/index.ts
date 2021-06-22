@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createServer } from 'miragejs';
+import { getRandomTshirt } from './getRandomTshirt';
 
 createServer({
   routes() {
@@ -24,11 +25,12 @@ createServer({
           numeroJogador: '',
           nomeJogador: '',
           pictures: [
-            'camisa3.jpg',
-            'camisa1.jpg',
-            'camisa1.jpg',
+            getRandomTshirt(),
+            getRandomTshirt(),
+            getRandomTshirt(),
+            getRandomTshirt(),
           ],
-          mainPicture: 'camisa3.jpg',
+          mainPicture: getRandomTshirt(),
         },
       ];
     });

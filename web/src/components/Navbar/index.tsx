@@ -9,7 +9,6 @@ import {
   Row,
 } from 'react-bootstrap';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
-import Avatar from '../../assets/avatar.jpg';
 
 export function Navbar(): JSX.Element {
   return (
@@ -55,7 +54,7 @@ export function Navbar(): JSX.Element {
 
           <Col xs={6} md={4}>
             <Image
-              src={Avatar}
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
               width={35}
               height={35}
               roundedCircle
