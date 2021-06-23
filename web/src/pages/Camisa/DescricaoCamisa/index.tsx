@@ -32,7 +32,10 @@ export default function DescricaoCamisa():JSX.Element {
     api.get(`/camisa/${idCamisa}`).then((res) => setCamisa({ ...res.data[0] }));
   }, [idCamisa]);
 
-  const handleCallbackQuantidade = (childData: number) => {
+  /* Quantidade */
+  const [quantidadeCamisas, setQuantidadeCamisas] = useState<number>(1);
+  const handleQuantidade = (childData: number) => {
+    setQuantidadeCamisas(childData);
     setCamisa({ ...camisa, quantidade: childData });
   };
 
@@ -125,7 +128,11 @@ export default function DescricaoCamisa():JSX.Element {
             <div>
               <Form.Group controlId="quantidade-camisa">
                 <Form.Label>Quantidade</Form.Label>
-                <ItemsAmount estoque={camisa.estoque} parentCallback={handleCallbackQuantidade} />
+                <ItemsAmount
+                  counter={quantidadeCamisas}
+                  setCounter={handleQuantidade}
+                  estoque={camisa.estoque}
+                />
                 <Form.Text>
                   <small>
                     {`${camisa.estoque} unidades restantes`}
@@ -154,7 +161,6 @@ export default function DescricaoCamisa():JSX.Element {
           </div>
         </div>
 
-        {/* <Dropzone /> */}
       </Form>
     </Layout>
   );
