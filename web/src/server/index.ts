@@ -14,9 +14,6 @@ createServer({
             Inspirado no modelo que os craques do Flamengo usaram no “ano de ouro”,
             a Camisa Flamengo Adidas ...`,
         valor: 150,
-        // tamanho: Array.from<boolean>({ length: arrayTamanhos.length }).fill(
-        //   false,
-        // ),
         tamanho: 'P',
         estoque: 23,
         quantidade: 1,
