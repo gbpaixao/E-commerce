@@ -4,10 +4,10 @@ import { Button } from 'react-bootstrap';
 
 interface Props {
   array: string[],
-  parentCallback: (childData: boolean[]) => void,
+  callback: (childData: string) => void,
 }
 
-export default function ButtonGroup({ array, parentCallback }: Props):JSX.Element {
+export default function ButtonGroup({ array, callback }: Props):JSX.Element {
   const [selected, setSelected] = useState<boolean[]>(
     Array.from<boolean>({ length: array.length }).fill(false),
   );
@@ -44,7 +44,7 @@ export default function ButtonGroup({ array, parentCallback }: Props):JSX.Elemen
                 aux_array[index] = true;
               }
               setSelected([...aux_array]);
-              parentCallback([...aux_array]);
+              callback(array[aux_array.indexOf(true)]);
             }}
           >
             {element}
