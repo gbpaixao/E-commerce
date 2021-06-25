@@ -2,7 +2,7 @@ import { Form } from 'react-bootstrap';
 import ButtonIcon from '../ButtonIcon';
 
 interface IProps {
-  estoque: number,
+  estoque?: number,
   counter: number,
   setCounter: (counter: number) => void
 }
@@ -36,7 +36,11 @@ export default function ItemsAmount({
       <ButtonIcon
         char="+"
         onClick={
-          () => (counter < estoque) && setCounter(counter + 1)
+          () => {
+            if (estoque && (counter < estoque)) {
+              setCounter(counter + 1);
+            } else { setCounter(counter + 1); }
+          }
         }
       />
     </div>
