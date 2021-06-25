@@ -6,7 +6,7 @@ createServer({
   routes() {
     this.namespace = 'api';
 
-    this.get('/camisa/1', () => [
+    this.get('/camisas/1', () => [
       {
         nomeCamisa: 'Camisa Básica',
         descricao: `Camisa Flamengo I 21/22 s/n° Torcedor Adidas Masculina - Vermelho+Preto.
