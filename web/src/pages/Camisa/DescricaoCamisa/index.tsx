@@ -6,10 +6,10 @@ import {
 } from 'react-bootstrap';
 import api from '../../../services/api';
 import { Layout } from '../../../components/Layout';
-import './styles.css';
 import ItemsAmount from '../../../components/ItemsAmount';
 import { ICamisa } from '../../../types/Camisa';
 import { IParams } from '../../../types/Params';
+import { styles } from './styles';
 
 export default function DescricaoCamisa():JSX.Element {
   /* Initial State */
@@ -42,9 +42,9 @@ export default function DescricaoCamisa():JSX.Element {
   return (
     <Layout>
       <Form>
-        <div id="main-container">
-          <div id="pictures-container">
-            <div id="pictures-container-thumbnails">
+        <div className={styles.mainContainer}>
+          <div className={styles.picturesContainer}>
+            <div className={styles.picturesContainerThumbnails}>
               {camisa.pictures.map((picture, index) => (
                 <Image
                   // eslint-disable-next-line react/no-array-index-key
@@ -55,8 +55,8 @@ export default function DescricaoCamisa():JSX.Element {
                 />
               ))}
             </div>
-            <div id="pictures-container-main">
 
+            <div>
               <Image
                 src={camisa.mainPicture}
                 width={300}
@@ -65,7 +65,7 @@ export default function DescricaoCamisa():JSX.Element {
             </div>
           </div>
 
-          <div id="description-container">
+          <div className={styles.descriptionContainer}>
             <h1>{camisa.nomeCamisa}</h1>
 
             <p>{camisa.descricao}</p>
@@ -87,7 +87,7 @@ export default function DescricaoCamisa():JSX.Element {
 
             </Form.Group>
 
-            <div id="description-container-input-group">
+            <div className={styles.descriptionContainerInputGroup}>
               <Form.Group controlId="nome-jogador" style={{ width: '200px' }}>
                 <Form.Label>
                   <b>Nome Jogador</b>
@@ -119,7 +119,7 @@ export default function DescricaoCamisa():JSX.Element {
 
           </div>
 
-          <div id="shipping-container">
+          <div className={styles.shippingContainer}>
             <div>
               <h1>{`R$ ${camisa.valor.toFixed(2).replace('.', ',')}`}</h1>
               <small>{`6x de R$ ${(camisa.valor / 6).toFixed(2).replace('.', ',')}`}</small>
@@ -153,7 +153,7 @@ export default function DescricaoCamisa():JSX.Element {
               </Form.Group>
             </div>
 
-            <div id="add-to-cart">
+            <div className={styles.addToCart}>
               <Button style={{ backgroundColor: '#5227CC', borderColor: '#5227CC' }}>
                 Adicionar ao carrinho
               </Button>
