@@ -9,4 +9,6 @@ export interface ICamisa {
     nomeJogador: string,
     pictures: string[],
     mainPicture: string
+    fornecedor: string,
+    tipo: string,
 }

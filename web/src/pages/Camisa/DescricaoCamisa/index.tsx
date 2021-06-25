@@ -24,6 +24,8 @@ export default function DescricaoCamisa():JSX.Element {
     nomeJogador: '',
     pictures: [],
     mainPicture: '',
+    fornecedor: '',
+    tipo: '',
   } as ICamisa);
 
   /* Fetch from server */
@@ -34,10 +36,6 @@ export default function DescricaoCamisa():JSX.Element {
 
   /* Quantidade */
   const [quantidadeCamisas, setQuantidadeCamisas] = useState<number>(1);
-  const handleQuantidade = (childData: number) => {
-    setQuantidadeCamisas(childData);
-    setCamisa({ ...camisa, quantidade: childData });
-  };
 
   return (
     <Layout>
@@ -130,7 +128,10 @@ export default function DescricaoCamisa():JSX.Element {
                 <Form.Label>Quantidade</Form.Label>
                 <ItemsAmount
                   counter={quantidadeCamisas}
-                  setCounter={handleQuantidade}
+                  setCounter={(childData: number) => {
+                    setQuantidadeCamisas(childData);
+                    setCamisa({ ...camisa, quantidade: childData });
+                  }}
                   estoque={camisa.estoque}
                 />
                 <Form.Text>
