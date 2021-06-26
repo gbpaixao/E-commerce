@@ -168,7 +168,7 @@ export default function CadastroCamisa(): JSX.Element {
                     try {
                       const response = await api.post('/camisas', {
                         camisa,
-                      }, undefined);
+                      });
 
                       /* Adicionar à contextAPI */
                     } catch (error) {
