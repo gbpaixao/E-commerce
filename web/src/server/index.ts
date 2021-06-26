@@ -27,6 +27,14 @@ createServer({
         ],
         mainPicture: getRandomTshirt(),
       },
-    ]);
+    ],
+    { timing: 3000 });
+
+    this.post('/camisas', (schema, request) => {
+      const camisa = JSON.parse(request.requestBody);
+
+      return camisa;
+    },
+    { timing: 3000 });
   },
 });
