@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import {
-  Form, InputGroup, Figure, Button,
+  Form, InputGroup, Figure, Button, Spinner,
 } from 'react-bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
+import { toast } from 'react-toastify';
 import ButtonGroup from '../../../components/ButtonGroup';
 import { Layout } from '../../../components/Layout';
 import { ICamisa } from '../../../types/Camisa';
 import { styles } from './styles';
 import { getRandomTshirt } from '../../../server/getRandomTshirt';
 import ItemsAmount from '../../../components/ItemsAmount';
+import api from '../../../services/api';
 
 export default function CadastroCamisa(): JSX.Element {
   bsCustomFileInput.init();
@@ -29,6 +31,8 @@ export default function CadastroCamisa(): JSX.Element {
   } as ICamisa);
 
   const [quantidade, setQuantidade] = useState<number>(1);
+
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   return (
     <Layout>
@@ -157,8 +161,33 @@ export default function CadastroCamisa(): JSX.Element {
               </div>
 
               <div className={styles.submitButton}>
-                <Button style={{ backgroundColor: '#5227CC', borderColor: '#5227CC' }}>
-                  Cadastrar Camisa
+                <Button
+                  type="submit"
+                  onClick={async (e) => {
+                    setSubmitting(true);
+                    try {
+                      const response = await api.post('/camisas', {
+                        camisa,
+                      }, undefined);
+
+                      /* Adicionar à contextAPI */
+                    } catch (error) {
+                      toast.error('Houve algum problema!');
+                    }
+                    setSubmitting(false);
+                    e.preventDefault();
+                  }}
+                  style={{ backgroundColor: '#5227CC', borderColor: '#5227CC', width: '150px' }}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting
+                    ? (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Spinner as="span" size="sm" animation="border" role="status" />
+                        {'  Cadastrando...'}
+                      </div>
+                    )
+                    : 'Cadastrar Camisa'}
                 </Button>
               </div>
             </div>

@@ -1,7 +1,129 @@
-import axios from 'axios';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-param-reassign */
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import notifyResponse from './notifyResponse';
 
-const api = axios.create({
-  baseURL: 'https://localhost:3000/api',
-});
+class Api {
+  #axiosInstance : AxiosInstance;
+
+  constructor() {
+    this.#axiosInstance = axios.create({
+      baseURL: 'https://localhost:3000/api',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    this.#axiosInstance.interceptors.request.use(
+      (config) => { // request success
+        const token = 'asdasdasdasd'; /* Pegar da ContextAPI */
+        config.headers.Authorization = `Bearer ${token}`;
+
+        return config;
+      },
+      (error) => { // request error
+        Promise.reject(error);
+      },
+    );
+  }
+
+  /**
+   * GET method
+   * @param url is the server URL that will be used for the request
+   * @param config is the config that was provided to `axios` for the request
+   * @param notificationText custom notification text
+   * @param showNotification whether to show toast notification or not
+   */
+  async get(
+    url: string,
+    config?: AxiosRequestConfig,
+    notificationText?: string,
+    showNotification = true,
+  ): Promise<AxiosResponse<any>> {
+    try {
+      const response = await this.#axiosInstance.get(url, config);
+      notifyResponse(response.status, showNotification, notificationText);
+      return response;
+    } catch (error) {
+      notifyResponse(error.response.status);
+      return undefined as unknown as AxiosResponse;
+    }
+  }
+
+  /**
+   * POST method
+   * @param url is the server URL that will be used for the request
+   * @param data is the data to be sent as the request body
+   * @param config is the config that was provided to `axios` for the request
+   * @param notificationText custom notification text
+   * @param showNotification whether to show toast notification or not
+   */
+  async post(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+    notificationText?: string,
+    showNotification = true,
+  ): Promise<AxiosResponse<any>> {
+    try {
+      const response = await this.#axiosInstance.post(url, data, config);
+      notifyResponse(response.status, showNotification, notificationText);
+      return response;
+    } catch (error) {
+      notifyResponse(error.response.status);
+      return undefined as unknown as AxiosResponse;
+    }
+  }
+
+  /**
+   * PUT method
+   * @param url is the server URL that will be used for the request
+   * @param data is the data to be sent as the request body
+   * @param config is the config that was provided to `axios` for the request
+   * @param notificationText custom notification text
+   * @param showNotification whether to show toast notification or not
+   */
+  async put(
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig,
+    notificationText?: string,
+    showNotification = true,
+  ): Promise<AxiosResponse<any>> {
+    try {
+      const response = await this.#axiosInstance.put(url, data, config);
+      notifyResponse(response.status, showNotification, notificationText);
+      return response;
+    } catch (error) {
+      notifyResponse(error.response.status);
+      return undefined as unknown as AxiosResponse;
+    }
+  }
+
+  /**
+   * DELETE method
+   * @param url is the server URL that will be used for the request
+   * @param config is the config that was provided to `axios` for the request
+   * @param notificationText custom notification text
+   * @param showNotification whether to show toast notification or not
+   */
+  async delete(
+    url: string,
+    config?: AxiosRequestConfig,
+    notificationText?: string,
+    showNotification = true,
+  ): Promise<AxiosResponse<any>> {
+    try {
+      const response = await this.#axiosInstance.delete(url, config);
+      notifyResponse(response.status, showNotification, notificationText);
+      return response;
+    } catch (error) {
+      notifyResponse(error.response.status);
+      return undefined as unknown as AxiosResponse;
+    }
+  }
+}
+
+const api = new Api();
 
 export default api;
