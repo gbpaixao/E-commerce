@@ -31,14 +31,14 @@ class Api {
    * GET method
    * @param url is the server URL that will be used for the request
    * @param config is the config that was provided to `axios` for the request
-   * @param notificationText custom notification text
    * @param showNotification whether to show toast notification or not
+   * @param notificationText custom notification text
    */
   async get(
     url: string,
     config?: AxiosRequestConfig,
-    notificationText?: string,
     showNotification = true,
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.get(url, config);
@@ -55,15 +55,15 @@ class Api {
    * @param url is the server URL that will be used for the request
    * @param data is the data to be sent as the request body
    * @param config is the config that was provided to `axios` for the request
-   * @param notificationText custom notification text
    * @param showNotification whether to show toast notification or not
+   * @param notificationText custom notification text
    */
   async post(
     url: string,
     data?: any,
     config?: AxiosRequestConfig,
-    notificationText?: string,
     showNotification = true,
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.post(url, data, config);
@@ -80,15 +80,15 @@ class Api {
    * @param url is the server URL that will be used for the request
    * @param data is the data to be sent as the request body
    * @param config is the config that was provided to `axios` for the request
-   * @param notificationText custom notification text
    * @param showNotification whether to show toast notification or not
+   * @param notificationText custom notification text
    */
   async put(
     url: string,
     data?: any,
     config?: AxiosRequestConfig,
-    notificationText?: string,
     showNotification = true,
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.put(url, data, config);
@@ -104,14 +104,14 @@ class Api {
    * DELETE method
    * @param url is the server URL that will be used for the request
    * @param config is the config that was provided to `axios` for the request
-   * @param notificationText custom notification text
    * @param showNotification whether to show toast notification or not
+   * @param notificationText custom notification text
    */
   async delete(
     url: string,
     config?: AxiosRequestConfig,
-    notificationText?: string,
     showNotification = true,
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.delete(url, config);
