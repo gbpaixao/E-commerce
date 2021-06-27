@@ -8,6 +8,7 @@ createServer({
 
     this.get('/camisas/1', () => [
       {
+        id: 'b1b95bfd-41cd-4c7f-bd12-ead6fcabc9a1',
         nomeCamisa: 'Camisa Básica',
         descricao: `Camisa Flamengo I 21/22 s/n° Torcedor Adidas Masculina - Vermelho+Preto.
             Alô, Nação Rubro-Negra! Chegou o novo manto do Mengão para a temporada 21/22.
@@ -28,7 +29,7 @@ createServer({
         mainPicture: getRandomTshirt(),
       },
     ],
-    { timing: 3000 });
+    { timing: 1000 });
 
     this.post('/camisas', (schema, request) => {
       const camisa = JSON.parse(request.requestBody);
