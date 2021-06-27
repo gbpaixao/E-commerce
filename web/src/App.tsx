@@ -1,9 +1,17 @@
-import { Login } from './pages/Login';
-import { Carrinho } from './pages/Carrinho';
+import { toast } from 'react-toastify';
+import Routes from './routes/index.routes';
+import './server';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+toast.configure({
+  autoClose: 4000,
+  draggable: false,
+  pauseOnFocusLoss: false,
+});
+function App(): JSX.Element {
   return (
-    <Carrinho />
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Routes />
   );
 }
 
