@@ -1,41 +1,49 @@
-/* eslint-disable global-require */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Button, Form, Image, InputGroup,
+  Button, Form, Image, InputGroup, Spinner,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import api from '../../../services/api';
 import { Layout } from '../../../components/Layout';
 import ItemsAmount from '../../../components/ItemsAmount';
-import { ICamisa } from '../../../types/Camisa';
-import { IParams } from '../../../types/Params';
+import { BodyParams } from '../../../types/BodyParams';
 import { styles } from './styles';
+import { useCamisa } from '../../../contexts/CamisaContext';
+import { useCarrinho } from '../../../contexts/CarrinhoContext';
 
 export default function DescricaoCamisa():JSX.Element {
-  /* Initial State */
-  const [camisa, setCamisa] = useState<ICamisa>({
-    nomeCamisa: '',
-    descricao: '',
-    valor: 0,
-    tamanho: '',
-    estoque: 0,
+  const { camisa, setCamisa } = useCamisa();
+  const { carrinho, setCarrinho } = useCarrinho();
+  const [itemCarrinho, setItemCarrinho] = useState({
     quantidade: 1,
     numeroJogador: '',
     nomeJogador: '',
-    pictures: [],
-    mainPicture: '',
-    fornecedor: '',
-    tipo: '',
-  } as ICamisa);
+  });
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+
+  const history = useHistory();
 
   /* Fetch from server */
-  const { id: idCamisa } = useParams<IParams>();
+  const { id: idCamisa } = useParams<BodyParams>();
   useEffect(() => {
-    api.get(`/camisas/${idCamisa}`).then((res) => setCamisa({ ...res.data[0] }));
+    api.get(`/camisas/${idCamisa}`, undefined, false)
+      .then((res) => setCamisa({ ...res.data[0] }));
   }, [idCamisa]);
 
-  /* Quantidade */
-  const [quantidadeCamisas, setQuantidadeCamisas] = useState<number>(1);
+  /* Handle Submit */
+  const handleSubmit = async () => {
+    try {
+      setSubmitting(true);
+      setCarrinho({ items: [...carrinho.items, { camisa: { ...camisa }, ...itemCarrinho }] });
+
+      history.push('/carrinho');
+    } catch (error) {
+      toast.error('Houve algum problema!');
+    }
+    setSubmitting(false);
+  };
 
   return (
     <Layout>
@@ -92,9 +100,9 @@ export default function DescricaoCamisa():JSX.Element {
                 </Form.Label>
                 <Form.Control
                   aria-label="nome-jogador"
-                  value={camisa.nomeJogador}
+                  value={itemCarrinho.nomeJogador}
                   onChange={
-                    (event) => setCamisa({ ...camisa, nomeJogador: event.target.value })
+                    (event) => setItemCarrinho({ ...itemCarrinho, nomeJogador: event.target.value })
                   }
                   maxLength={12}
                 />
@@ -105,10 +113,10 @@ export default function DescricaoCamisa():JSX.Element {
                 <Form.Label><b>Nº do Jogador</b></Form.Label>
                 <Form.Control
                   aria-label="numero-jogador"
-                  value={camisa.numeroJogador}
-                  onChange={
-                    (event) => setCamisa({ ...camisa, numeroJogador: event.target.value })
-                  }
+                  value={itemCarrinho.numeroJogador}
+                  onChange={(event) => {
+                    setItemCarrinho({ ...itemCarrinho, numeroJogador: event.target.value });
+                  }}
                   maxLength={2}
                 />
                 <Form.Text><small>Máximo de 2 caracteres</small></Form.Text>
@@ -127,10 +135,9 @@ export default function DescricaoCamisa():JSX.Element {
               <Form.Group controlId="quantidade-camisa">
                 <Form.Label>Quantidade</Form.Label>
                 <ItemsAmount
-                  counter={quantidadeCamisas}
+                  counter={itemCarrinho.quantidade}
                   setCounter={(childData: number) => {
-                    setQuantidadeCamisas(childData);
-                    setCamisa({ ...camisa, quantidade: childData });
+                    setItemCarrinho({ ...itemCarrinho, quantidade: childData });
                   }}
                   estoque={camisa.estoque}
                 />
@@ -155,8 +162,27 @@ export default function DescricaoCamisa():JSX.Element {
             </div>
 
             <div className={styles.addToCart}>
-              <Button style={{ backgroundColor: '#5227CC', borderColor: '#5227CC' }}>
+              {/* <Button style={{ backgroundColor: '#5227CC', borderColor: '#5227CC' }}>
                 Adicionar ao carrinho
+              </Button> */}
+
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                style={{ backgroundColor: '#5227CC', borderColor: '#5227CC', width: '100%' }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting
+                  ? (
+                    <div style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+                    }}
+                    >
+                      <Spinner as="span" size="sm" animation="border" role="status" />
+                      {'  Adicionando...'}
+                    </div>
+                  )
+                  : 'Adicionar ao carrinho'}
               </Button>
             </div>
           </div>

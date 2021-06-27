@@ -6,33 +6,32 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import { toast } from 'react-toastify';
 import ButtonGroup from '../../../components/ButtonGroup';
 import { Layout } from '../../../components/Layout';
-import { ICamisa } from '../../../types/Camisa';
 import { styles } from './styles';
 import { getRandomTshirt } from '../../../server/getRandomTshirt';
 import ItemsAmount from '../../../components/ItemsAmount';
 import api from '../../../services/api';
+import { useCamisa } from '../../../contexts/CamisaContext';
 
 export default function CadastroCamisa(): JSX.Element {
   bsCustomFileInput.init();
-  /* Initial State */
-  const [camisa, setCamisa] = useState<ICamisa>({
-    nomeCamisa: '',
-    descricao: '',
-    valor: 0.00,
-    tamanho: '',
-    estoque: 0,
-    quantidade: 1,
-    numeroJogador: '',
-    nomeJogador: '',
-    pictures: [],
-    mainPicture: '',
-    fornecedor: '',
-    tipo: '',
-  } as ICamisa);
 
-  const [quantidade, setQuantidade] = useState<number>(1);
-
+  const { camisa, setCamisa } = useCamisa();
+  const [estoque, setEstoque] = useState<number>(1);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    try {
+      const response = await api.post('/camisas', {
+        camisa,
+      });
+
+      /* Adicionar à contextAPI */
+    } catch (error) {
+      toast.error('Houve algum problema!');
+    }
+    setSubmitting(false);
+  };
 
   return (
     <Layout>
@@ -97,14 +96,14 @@ export default function CadastroCamisa(): JSX.Element {
                 />
               </Form.Group>
 
-              <Form.Group controlId="quantidade">
+              <Form.Group controlId="estoque">
                 <Form.Label><b>Quantidade</b></Form.Label>
                 <ItemsAmount
-                  counter={quantidade}
+                  counter={estoque}
                   setCounter={
                 (qtde) => {
-                  setQuantidade(qtde);
-                  setCamisa({ ...camisa, quantidade: qtde });
+                  setEstoque(qtde);
+                  setCamisa({ ...camisa, estoque: qtde });
                 }
             }
                 />
@@ -163,20 +162,7 @@ export default function CadastroCamisa(): JSX.Element {
               <div className={styles.submitButton}>
                 <Button
                   type="submit"
-                  onClick={async (e) => {
-                    setSubmitting(true);
-                    try {
-                      const response = await api.post('/camisas', {
-                        camisa,
-                      });
-
-                      /* Adicionar à contextAPI */
-                    } catch (error) {
-                      toast.error('Houve algum problema!');
-                    }
-                    setSubmitting(false);
-                    e.preventDefault();
-                  }}
+                  onClick={handleSubmit}
                   style={{ backgroundColor: '#5227CC', borderColor: '#5227CC', width: '150px' }}
                   disabled={isSubmitting}
                 >
