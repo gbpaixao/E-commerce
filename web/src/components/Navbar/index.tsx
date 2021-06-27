@@ -9,8 +9,10 @@ import {
   Row,
 } from 'react-bootstrap';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 
 export function Navbar(): JSX.Element {
+  const history = useHistory();
   return (
     <NavbarBs
       style={{
@@ -25,7 +27,13 @@ export function Navbar(): JSX.Element {
           color: '#FFF',
         }}
       >
-        <h4>RedsAju</h4>
+        <button
+          type="button"
+          style={{ backgroundColor: 'transparent', border: 'none', color: '#FFF' }}
+          onClick={() => history.push('/')}
+        >
+          <h4>RedsAju</h4>
+        </button>
 
         <Form>
           <InputGroup className="">
