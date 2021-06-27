@@ -11,7 +11,7 @@ interface ContextChildrenProps {
 interface CarrinhoContext {
   carrinho: Carrinho;
   addItem: (itemId: string, itemCarrinho: ItemCarrinho) => void;
-  // setCarrinho: React.Dispatch<React.SetStateAction<Carrinho>>
+  removeItem: (itemId: string) => void;
 }
 
 interface ItemCarrinho {
@@ -59,14 +59,25 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
       itemsCarrinho.push(novoItem);
     }
 
-    setCarrinho({ items: [...itemsCarrinho] });
+    setCarrinho({ items: itemsCarrinho });
     localStorage.setItem('@RedsAju:carrinho', JSON.stringify({
       items: itemsCarrinho,
     }));
   }
 
+  async function removeItem(itemId: string) {
+    const itemsFiltrados = carrinho.items.filter((item) => item.camisa.id !== itemId);
+
+    if (itemsFiltrados.length < carrinho.items.length) {
+      setCarrinho({ items: itemsFiltrados });
+      localStorage.setItem('@RedsAju:carrinho', JSON.stringify({
+        items: itemsFiltrados,
+      }));
+    }
+  }
+
   return (
-    <CarrinhoContext.Provider value={{ carrinho, addItem }}>
+    <CarrinhoContext.Provider value={{ carrinho, addItem, removeItem }}>
       {children}
     </CarrinhoContext.Provider>
   );
