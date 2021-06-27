@@ -16,6 +16,7 @@ const Routes = ():JSX.Element => (
         <CamisaContextProvider>
           <CamisaRoutes />
         </CamisaContextProvider>
+        <Route exact path="/carrinho" component={Carrinho} />
       </CarrinhoContextProvider>
     </Switch>
   </BrowserRouter>
