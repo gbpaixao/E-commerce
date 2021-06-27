@@ -3,7 +3,7 @@ import './server';
 
 function App(): JSX.Element {
   return (
-    <Routes />
+    <Carrinho />
   );
 }
 
