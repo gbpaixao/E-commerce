@@ -20,13 +20,27 @@ createServer({
         quantidade: 1,
         numeroJogador: '',
         nomeJogador: '',
-        pictures: [
-          getRandomTshirt(),
-          getRandomTshirt(),
-          getRandomTshirt(),
-          getRandomTshirt(),
+        pictures: [{
+          titulo: 'title.png',
+          url: getRandomTshirt(),
+        },
+        {
+          titulo: 'title.png',
+          url: getRandomTshirt(),
+        },
+        {
+          titulo: 'title.png',
+          url: getRandomTshirt(),
+        },
+        {
+          titulo: 'title.png',
+          url: getRandomTshirt(),
+        },
         ],
-        mainPicture: getRandomTshirt(),
+        mainPicture: {
+          titulo: 'title.png',
+          url: getRandomTshirt(),
+        },
       },
     ],
     { timing: 1000 });
