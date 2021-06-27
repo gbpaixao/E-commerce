@@ -2,7 +2,7 @@
 import { Col, Image, Row } from 'react-bootstrap';
 import { Layout } from '../../components/Layout';
 
-import CamisaImg from '../../assets/camisa6.jpg';
+// import CamisaImg from '../../assets/camisa6.jpg';
 import ItemsAmount from '../../components/ItemsAmount';
 
 export function Carrinho(): JSX.Element {
@@ -16,7 +16,7 @@ export function Carrinho(): JSX.Element {
 
       <div className="d-flex align-items-center">
         <Image
-          src={CamisaImg}
+          src=""
           height={157}
           width={157}
           style={{ marginRight: '6rem' }}
@@ -31,7 +31,7 @@ export function Carrinho(): JSX.Element {
         </Col>
 
         <Col style={{ marginRight: '6rem' }}>
-          <ItemsAmount parentCallback={() => {}} estoque={5} />
+          <ItemsAmount setCounter={() => {}} counter={0} />
         </Col>
 
         <Col>
