@@ -31,7 +31,7 @@ export default function DescricaoCamisa():JSX.Element {
   /* Fetch from server */
   const { id: idCamisa } = useParams<IParams>();
   useEffect(() => {
-    api.get(`/camisas/${idCamisa}`).then((res) => setCamisa({ ...res.data[0] }));
+    api.get(`/camisas/${idCamisa}`).then((res) => setCamisa({ ...res.data }));
   }, [idCamisa]);
 
   /* Quantidade */
