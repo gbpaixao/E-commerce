@@ -15,7 +15,7 @@ import { useCarrinho } from '../../../contexts/CarrinhoContext';
 
 export default function DescricaoCamisa():JSX.Element {
   const { camisa, setCamisa } = useCamisa();
-  const { carrinho, setCarrinho } = useCarrinho();
+  const { carrinho, addItem } = useCarrinho();
   const [itemCarrinho, setItemCarrinho] = useState({
     quantidade: 1,
     numeroJogador: '',
@@ -35,7 +35,7 @@ export default function DescricaoCamisa():JSX.Element {
   const handleSubmit = async () => {
     try {
       setSubmitting(true);
-      setCarrinho({ items: [...carrinho.items, { camisa: { ...camisa }, ...itemCarrinho }] });
+      addItem(camisa.id, itemCarrinho);
 
       history.push('/carrinho');
     } catch (error) {
