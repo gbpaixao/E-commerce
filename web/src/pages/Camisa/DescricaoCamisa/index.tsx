@@ -15,7 +15,7 @@ import { useCarrinho } from '../../../contexts/CarrinhoContext';
 
 export default function DescricaoCamisa():JSX.Element {
   const { camisa, setCamisa } = useCamisa();
-  const { carrinho, addItem } = useCarrinho();
+  const { addItem } = useCarrinho();
   const [itemCarrinho, setItemCarrinho] = useState({
     quantidade: 1,
     numeroJogador: '',

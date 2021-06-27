@@ -36,21 +36,32 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
   });
 
   async function addItem(itemId: string, itemCarrinho: ItemCarrinho) {
-    const itemsStoraged = [...carrinho.items];
+    const itemsCarrinho = [...carrinho.items];
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
+
     const { data: camisa } = await api.get(`/camisas/${itemId}`);
 
-    if (itemCarrinho.quantidade > camisa.estoque) {
+    const quantidadeAtual = item?.quantidade || 0;
+    const quantidade = quantidadeAtual + 1;
+
+    if (quantidade > camisa.estoque) {
       return;
     }
 
-    const newItem: Item = {
-      camisa,
-      ...itemCarrinho,
-    };
+    if (item) {
+      item.quantidade = quantidade;
+    } else {
+      const novoItem: Item = {
+        camisa,
+        ...itemCarrinho,
+      };
 
-    setCarrinho({ items: [...itemsStoraged, newItem] });
+      itemsCarrinho.push(novoItem);
+    }
+
+    setCarrinho({ items: [...itemsCarrinho] });
     localStorage.setItem('@RedsAju:carrinho', JSON.stringify({
-      items: [...itemsStoraged, newItem],
+      items: itemsCarrinho,
     }));
   }
 
