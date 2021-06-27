@@ -6,8 +6,9 @@ import pedidoRoutes from "./pedido.routes";
 
 const routes = Router()
 
-routes.use('/login', loginRoutes)
-routes.use('/camisa', camisaRoutes)
-routes.use('/pedido', pedidoRoutes)
+routes.get('/', (req, res) => res.send("api rodando"))
+routes.use(loginRoutes)
+routes.use(camisaRoutes)
+routes.use(pedidoRoutes)
 
 export default routes

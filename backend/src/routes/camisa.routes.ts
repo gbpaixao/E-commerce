@@ -1,7 +1,11 @@
 import { Router } from 'express';
+import { CreateCamisaController } from '../controllers/CreateCamisaController';
 
-const camisaRouter = Router();
+const routes = Router();
 
-camisaRouter.get('/', (req, res) => {return res.send('Rota de camisa')})
+const createCamisaController = new CreateCamisaController()
 
-export default camisaRouter;
+routes.get('/camisas', (req, res) => res.send('camisa'))
+routes.post('/camisas', createCamisaController.handle)
+
+export default routes;
