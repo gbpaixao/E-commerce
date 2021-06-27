@@ -1,8 +1,9 @@
-import { CadastroProduto } from './pages/CadastroProduto';
+import Routes from './Routes/index.routes';
+import './server';
 
-function App() {
+function App(): JSX.Element {
   return (
-    <CadastroProduto />
+    <Routes />
   );
 }
 

@@ -2,6 +2,10 @@
   display:table;
 }
 
+.geral{
+  justify-content: center;
+}
+
 .timage{
   width: 60%;
 }
