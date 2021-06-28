@@ -20,7 +20,10 @@ export const CamisaInitialState: Camisa = {
   tamanho: '',
   estoque: 0,
   pictures: [],
-  mainPicture: '',
+  mainPicture: {
+    titulo: '',
+    url: '',
+  },
   fornecedor: '',
   tipo: '',
 };
