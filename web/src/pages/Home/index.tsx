@@ -26,14 +26,6 @@ export function Home(): JSX.Element {
   return (
     <Layout>
       <div className={styles.container}>
-        <button
-          type="button"
-          style={{ background: 'transparent', border: 'none' }}
-          onClick={() => history.push('/cadastrarCamisa')}
-        >
-          <p className="mb-0">Cadastrar camisa</p>
-          <p>+</p>
-        </button>
         {camisas.map((camisa) => <CardCamisa key={camisa.idCamisa} camisa={camisa} />)}
       </div>
     </Layout>
