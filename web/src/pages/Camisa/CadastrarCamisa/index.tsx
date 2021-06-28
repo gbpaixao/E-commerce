@@ -26,6 +26,7 @@ export default function CadastroCamisa(): JSX.Element {
         camisa,
       });
 
+      setCamisa(response.data.camisa);
       /* Adicionar à contextAPI */
     } catch (error) {
       toast.error('Houve algum problema!');
