@@ -4,7 +4,7 @@ import ButtonIcon from '../ButtonIcon';
 interface IProps {
   estoque?: number,
   counter: number,
-  setCounter: (counter: number) => void
+  setCounter: (counter: number, itemId?: string) => void
 }
 
 export default function ItemsAmount({

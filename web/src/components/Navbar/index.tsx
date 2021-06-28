@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 
 export function Navbar(): JSX.Element {
   const history = useHistory();
+
   return (
     <NavbarBs
       style={{
@@ -56,7 +57,10 @@ export function Navbar(): JSX.Element {
         >
           <p className="mb-0">Usuário</p>
 
-          <Button style={{ background: 'transparent', border: 'none' }}>
+          <Button
+            style={{ background: 'transparent', border: 'none' }}
+            onClick={() => history.push('/carrinho')}
+          >
             <FiShoppingCart size={20} />
           </Button>
 

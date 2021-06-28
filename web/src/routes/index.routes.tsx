@@ -4,8 +4,8 @@ import {
 } from 'react-router-dom';
 import { CamisaContextProvider } from '../contexts/CamisaContext';
 import { CarrinhoContextProvider } from '../contexts/CarrinhoContext';
-import Carrinho from '../pages/Carrinho';
-import Home from '../pages/Home';
+import { Carrinho } from '../pages/Carrinho';
+import { Home } from '../pages/Home';
 import { camisaRoutes } from './camisa.routes';
 
 const Routes = ():JSX.Element => (
