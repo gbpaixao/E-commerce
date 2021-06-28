@@ -1,5 +1,5 @@
 export interface Camisa {
-  id: string;
+  idCamisa: string;
   nomeCamisa: string
   descricao: string
   valor: number

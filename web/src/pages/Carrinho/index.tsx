@@ -10,23 +10,26 @@ import { useCarrinho } from '../../contexts/CarrinhoContext';
 
 import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
+import { getRandomTshirt } from '../../server/getRandomTshirt';
 
 export function Carrinho(): JSX.Element {
   const { carrinho, removeItem, updateItemAmount } = useCarrinho();
+
+  console.log(carrinho);
 
   return (
     <Layout>
       {carrinho.items.length ? (
         <div>
           <div className="d-flex">
-            <h3 style={{ marginLeft: 'calc(157px + 6rem + 15px)' }}>PRODUTO</h3>
+            <h3 style={{ marginLeft: 'calc(157px + 6rem + 15px)' }}>CAMISA</h3>
             <h3 style={{ marginLeft: '12.75rem' }}>QTD</h3>
             <h3 style={{ marginLeft: '13.5rem' }}>SUBTOTAL</h3>
           </div>
           {carrinho.items?.map((item) => (
-            <div key={item.camisa.id} className="d-flex align-items-center">
+            <div key={item.camisa.idCamisa} className="d-flex align-items-center">
               <Image
-                src={item.camisa.mainPicture.url}
+                src={getRandomTshirt()}
                 height={157}
                 width={157}
                 style={{ marginRight: '6rem' }}
@@ -40,7 +43,8 @@ export function Carrinho(): JSX.Element {
               </Col>
               <Col style={{ marginRight: '6rem' }}>
                 <ItemsAmount
-                  setCounter={(quantidade: number) => updateItemAmount(quantidade, item.camisa.id)}
+                  setCounter={(quantidade: number) => (
+                    updateItemAmount(quantidade, item.camisa.idCamisa))}
                   counter={item.quantidade}
                 />
               </Col>
@@ -53,7 +57,7 @@ export function Carrinho(): JSX.Element {
                 <button
                   type="button"
                   className={styles.trashButton}
-                  onClick={() => removeItem(item.camisa.id)}
+                  onClick={() => removeItem(item.camisa.idCamisa)}
                 >
                   <FiTrash2 color="#5227CC" size={24} />
                 </button>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { CardCamisa } from '../../components/CardCamisa';
 import { Layout } from '../../components/Layout';
 
@@ -9,6 +10,8 @@ import { Camisa } from '../../types/Camisa';
 
 export function Home(): JSX.Element {
   const [camisas, setCamisas] = useState<Camisa[]>([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     async function getCamisas() {
@@ -23,7 +26,15 @@ export function Home(): JSX.Element {
   return (
     <Layout>
       <div className={styles.container}>
-        {camisas.map((camisa) => <CardCamisa key={camisa.id} camisa={camisa} />)}
+        <button
+          type="button"
+          style={{ background: 'transparent', border: 'none' }}
+          onClick={() => history.push('/cadastrarCamisa')}
+        >
+          <p className="mb-0">Cadastrar camisa</p>
+          <p>+</p>
+        </button>
+        {camisas.map((camisa) => <CardCamisa key={camisa.idCamisa} camisa={camisa} />)}
       </div>
     </Layout>
   );
