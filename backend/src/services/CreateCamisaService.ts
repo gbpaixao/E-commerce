@@ -14,6 +14,7 @@ class CreateCamisaService {
     }
 
     const camisaDB = await database
+      .clone()
       .insert(camisaInsert, 'idCamisa')
       .into('Camisa')
 
