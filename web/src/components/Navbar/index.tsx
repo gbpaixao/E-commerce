@@ -9,9 +9,11 @@ import {
   Row,
 } from 'react-bootstrap';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
-import Avatar from '../../assets/avatar.jpg';
+import { useHistory } from 'react-router-dom';
 
 export function Navbar(): JSX.Element {
+  const history = useHistory();
+
   return (
     <NavbarBs
       style={{
@@ -26,7 +28,13 @@ export function Navbar(): JSX.Element {
           color: '#FFF',
         }}
       >
-        <h4>RedsAju</h4>
+        <button
+          type="button"
+          style={{ backgroundColor: 'transparent', border: 'none', color: '#FFF' }}
+          onClick={() => history.push('/')}
+        >
+          <h4>RedsAju</h4>
+        </button>
 
         <Form>
           <InputGroup className="">
@@ -49,13 +57,16 @@ export function Navbar(): JSX.Element {
         >
           <p className="mb-0">Usuário</p>
 
-          <Button style={{ background: 'transparent', border: 'none' }}>
+          <Button
+            style={{ background: 'transparent', border: 'none' }}
+            onClick={() => history.push('/carrinho')}
+          >
             <FiShoppingCart size={20} />
           </Button>
 
           <Col xs={6} md={4}>
             <Image
-              src={Avatar}
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
               width={35}
               height={35}
               roundedCircle
