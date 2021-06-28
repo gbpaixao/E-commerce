@@ -5,6 +5,7 @@ import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
 
 import { Camisa } from '../../types/Camisa';
+import { getRandomTshirt } from '../../server/getRandomTshirt';
 
 interface CardCamisaProps {
   camisa: Camisa;
@@ -17,7 +18,7 @@ export function CardCamisa({ camisa }: CardCamisaProps): JSX.Element {
     <div>
       <div className={styles.card}>
         <img
-          src={camisa.mainPicture.url}
+          src={getRandomTshirt()}
           height={168}
           width={255}
           alt={camisa.nomeCamisa}
