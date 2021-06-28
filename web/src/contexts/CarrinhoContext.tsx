@@ -12,6 +12,7 @@ interface CarrinhoContext {
   carrinho: Carrinho;
   addItem: (itemId: string, itemCarrinho: ItemCarrinho) => void;
   removeItem: (itemId: string) => void;
+  updateItemAmount: (quantidade: number, itemId: string) => void;
 }
 
 interface ItemCarrinho {
@@ -39,13 +40,13 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     const itemsCarrinho = [...carrinho.items];
     const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
 
-    const { data: camisa } = await api.get(`/camisas/${itemId}`);
+    const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
 
     const quantidadeAtual = item?.quantidade || 0;
     const quantidade = quantidadeAtual + 1;
 
     if (quantidade > camisa.estoque) {
-      return;
+      throw new Error('Quantidade solicitada fora de estoque');
     }
 
     if (item) {
@@ -76,8 +77,31 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     }
   }
 
+  async function updateItemAmount(quantidade: number, itemId: string) {
+    const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
+
+    if (quantidade > camisa.estoque) {
+      throw new Error('Quantidade solicitada fora de estoque');
+    }
+
+    const itemsCarrinho = [...carrinho.items];
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
+
+    if (item) {
+      item.quantidade = quantidade;
+
+      setCarrinho({ items: itemsCarrinho });
+      localStorage.setItem('@RedsAju:carrinho', JSON.stringify({
+        items: itemsCarrinho,
+      }));
+    }
+  }
+
   return (
-    <CarrinhoContext.Provider value={{ carrinho, addItem, removeItem }}>
+    <CarrinhoContext.Provider value={{
+      carrinho, addItem, removeItem, updateItemAmount,
+    }}
+    >
       {children}
     </CarrinhoContext.Provider>
   );

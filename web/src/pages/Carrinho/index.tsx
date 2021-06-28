@@ -12,7 +12,7 @@ import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
 
 export function Carrinho(): JSX.Element {
-  const { carrinho, removeItem } = useCarrinho();
+  const { carrinho, removeItem, updateItemAmount } = useCarrinho();
 
   return (
     <Layout>
@@ -39,7 +39,10 @@ export function Carrinho(): JSX.Element {
                 </h3>
               </Col>
               <Col style={{ marginRight: '6rem' }}>
-                <ItemsAmount setCounter={() => {}} counter={item.quantidade} />
+                <ItemsAmount
+                  setCounter={(quantidade: number) => updateItemAmount(quantidade, item.camisa.id)}
+                  counter={item.quantidade}
+                />
               </Col>
               <Col>
                 <h4 style={{ minWidth: '10rem' }}>
