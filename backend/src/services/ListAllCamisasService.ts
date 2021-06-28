@@ -4,7 +4,14 @@ class ListAllCamisasService {
   async execute() {
     const camisas = await database
       .clone()
-      .select('idCamisa', 'nome', 'descricao', 'valor', 'estoque', 'tamanho')
+      .select(
+        'idCamisa',
+        'nome as nomeCamisa',
+        'descricao',
+        'valor',
+        'estoque',
+        'tamanho'
+      )
       .from('Camisa')
 
     return camisas
