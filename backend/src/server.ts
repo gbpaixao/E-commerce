@@ -1,18 +1,24 @@
-import express from 'express'
-import database from './database'
-import routes from './routes'
+import express, { Request, Response } from 'express'
+import routes from './routes/index.routes'
 
 const server = express()
 
-server.get('/', async (req, res) => {
-  const data = await database.select().from('Usuario')
-
-  if (data.length === 0)
-    return res.json({ message: 'Não foram encontrados registros no BD.' })
-  return res.json({ data })
-})
+server.use(express.json())
 server.use(routes)
 
-server.listen(process.env.PORT || 3333)
+server.use((err: Error, request: Request, response: Response) => {
+  if (err instanceof Error) {
+    return response.status(400).json({
+      error: err.message,
+    })
+  }
+
+  return response.status(500).json({
+    status: 'error',
+    message: 'Internal server error',
+  })
+})
+
+server.listen(process.env.PORT || 3333, () => console.log('Api rodando.'))
 
 export default server

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-const pedidoRouter = Router();
+const routes = Router();
 
-pedidoRouter.get('/', (req, res) => {return res.send('Rota de pedido')})
+routes.get('/', (req, res) => {return res.send('Rota de pedido')})
 
-export default pedidoRouter;
+export default routes;

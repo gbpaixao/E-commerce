@@ -7,7 +7,7 @@ interface ContextChildrenProps {
 
 interface CamisaContext {
   camisa: Camisa,
-  setCamisa: React.Dispatch<React.SetStateAction<Camisa>>
+  setCamisa: (camisa: Camisa) => void
 }
 
 const CamisaContext = createContext<CamisaContext>({} as CamisaContext);
@@ -26,8 +26,20 @@ export const CamisaInitialState: Camisa = {
 };
 
 export function CamisaContextProvider({ children }: ContextChildrenProps):JSX.Element {
-  const [camisa, setCamisa] = useState(CamisaInitialState);
+  const [camisa, setCamisaContext] = useState<Camisa>(() => {
+    const camisa_aux = localStorage.getItem('camisa');
+    if (camisa_aux) return JSON.parse(camisa_aux);
 
+    return CamisaInitialState;
+  });
+
+  /* Persist */
+  function setCamisa(newCamisa: Camisa) {
+    setCamisaContext(newCamisa);
+    localStorage.setItem('camisa', JSON.stringify(newCamisa));
+  }
+
+  /* Provider */
   return (
     <CamisaContext.Provider value={{ camisa, setCamisa }}>
       {children}
