@@ -26,7 +26,7 @@ export function Carrinho(): JSX.Element {
           {carrinho.items?.map((item) => (
             <div key={item.camisa.id} className="d-flex align-items-center">
               <Image
-                src={item.camisa.mainPicture}
+                src={item.camisa.mainPicture.url}
                 height={157}
                 width={157}
                 style={{ marginRight: '6rem' }}

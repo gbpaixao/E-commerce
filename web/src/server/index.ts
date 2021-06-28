@@ -18,16 +18,27 @@ createServer({
           valor: 150,
           tamanho: 'P',
           estoque: 23,
-          quantidade: 1,
-          numeroJogador: '',
-          nomeJogador: '',
-          pictures: [
-            getRandomTshirt(),
-            getRandomTshirt(),
-            getRandomTshirt(),
-            getRandomTshirt(),
+          pictures: [{
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
           ],
-          mainPicture: getRandomTshirt(),
+          mainPicture: {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
         },
         {
           nomeCamisa: 'Camisa 2',
@@ -35,16 +46,27 @@ createServer({
           valor: 200,
           tamanho: 'M',
           estoque: 15,
-          quantidade: 1,
-          numeroJogador: '',
-          nomeJogador: '',
-          pictures: [
-            getRandomTshirt(),
-            getRandomTshirt(),
-            getRandomTshirt(),
-            getRandomTshirt(),
+          pictures: [{
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
+          {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
           ],
-          mainPicture: getRandomTshirt(),
+          mainPicture: {
+            titulo: 'title.png',
+            url: getRandomTshirt(),
+          },
         },
       ],
     });

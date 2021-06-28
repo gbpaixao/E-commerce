@@ -28,7 +28,7 @@ export default function DescricaoCamisa():JSX.Element {
   /* Fetch from server */
   const { id: idCamisa } = useParams<BodyParams>();
   useEffect(() => {
-    api.get(`/camisas/${idCamisa}`).then((res) => setCamisa({ ...res.data }));
+    api.get(`/camisas/${idCamisa}`, undefined, false).then((res) => setCamisa({ ...res.data }));
   }, [idCamisa]);
 
   /* Handle Submit */
@@ -54,7 +54,7 @@ export default function DescricaoCamisa():JSX.Element {
                 <Image
                   // eslint-disable-next-line react/no-array-index-key
                   key={index}
-                  src={picture}
+                  src={picture.url}
                   width={75}
                   height={95}
                 />
@@ -63,7 +63,7 @@ export default function DescricaoCamisa():JSX.Element {
 
             <div>
               <Image
-                src={camisa.mainPicture}
+                src={camisa.mainPicture.url}
                 width={300}
                 height={440}
               />

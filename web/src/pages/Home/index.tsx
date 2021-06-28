@@ -12,7 +12,7 @@ export function Home(): JSX.Element {
 
   useEffect(() => {
     async function getCamisas() {
-      const response = await api.get('/camisas');
+      const response = await api.get('/camisas', undefined, false);
 
       setCamisas(response.data.camisas);
     }

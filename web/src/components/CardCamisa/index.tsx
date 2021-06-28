@@ -17,7 +17,7 @@ export function CardCamisa({ camisa }: CardCamisaProps): JSX.Element {
     <div>
       <div className={styles.card}>
         <img
-          src={camisa.mainPicture}
+          src={camisa.mainPicture.url}
           height={168}
           width={255}
           alt={camisa.nomeCamisa}
