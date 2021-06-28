@@ -15,10 +15,26 @@ class CreateCamisaService {
 
     const camisaDB = await database
       .clone()
-      .insert(camisaInsert, 'idCamisa')
+      .insert(camisaInsert, [
+        'idCamisa',
+        'nome',
+        'descricao',
+        // 'fornecedor',
+        'valor',
+        'estoque',
+        'tamanho',
+      ])
       .into('Camisa')
 
-    const idCamisa = camisaDB[0]
+    const camisaResponse = {
+      idCamisa: camisaDB[0].idCamisa,
+      nomeCamisa: camisaDB[0].nome,
+      descricao: camisaDB[0].descricao,
+      fornecedor: '',
+      valor: camisaDB[0].valor,
+      estoque: camisaDB[0].estoque,
+      tamanho: camisaDB[0].tamanho,
+    }
 
     /* Fotos */
     const { pictures, mainPicture } = camisa
@@ -28,11 +44,14 @@ class CreateCamisaService {
     })
     pictures.map(async (picture) => {
       await database
-        .insert({ ...picture, Camisa_idCamisa: idCamisa }, 'idFoto')
+        .insert(
+          { ...picture, Camisa_idCamisa: camisaResponse.idCamisa },
+          'idFoto'
+        )
         .into('Foto')
     })
 
-    return idCamisa
+    return camisaResponse
   }
 }
 
