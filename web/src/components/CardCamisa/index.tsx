@@ -5,19 +5,31 @@ import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
 
 import { Camisa } from '../../types/Camisa';
+import { getRandomTshirt } from '../../server/getRandomTshirt';
+import { useCamisa } from '../../contexts/CamisaContext';
 
 interface CardCamisaProps {
   camisa: Camisa;
 }
 
 export function CardCamisa({ camisa }: CardCamisaProps): JSX.Element {
+  const { setCamisa } = useCamisa();
+
   const history = useHistory();
+
+  function handleClick(id?: string) {
+    console.log('camisa', camisa);
+    if (id) {
+      setCamisa(camisa);
+      history.push(`/descricaoCamisa/${id}`);
+    }
+  }
 
   return (
     <div>
       <div className={styles.card}>
         <img
-          src={camisa.mainPicture.url}
+          src={getRandomTshirt()}
           height={168}
           width={255}
           alt={camisa.nomeCamisa}
@@ -34,7 +46,7 @@ export function CardCamisa({ camisa }: CardCamisaProps): JSX.Element {
           >
             <Button
               type="button"
-              onClick={() => history.push(`/descricaoCamisa/${camisa.id}`)}
+              onClick={() => handleClick(camisa.idCamisa)}
               style={{ background: '#5227CC', border: 0 }}
             >
               Ver mais

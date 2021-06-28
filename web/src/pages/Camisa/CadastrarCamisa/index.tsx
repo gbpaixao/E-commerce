@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import {
   Form, InputGroup, Figure, Button, Spinner,
 } from 'react-bootstrap';
@@ -19,16 +19,19 @@ export default function CadastroCamisa(): JSX.Element {
   const [estoque, setEstoque] = useState<number>(1);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
     setSubmitting(true);
     try {
       const response = await api.post('/camisas', {
         camisa,
-      });
+      }, undefined, false);
 
       setCamisa(response.data.camisa);
       /* Adicionar à contextAPI */
     } catch (error) {
+      console.error(error);
       toast.error('Houve algum problema!');
     }
     setSubmitting(false);
