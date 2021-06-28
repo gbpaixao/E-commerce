@@ -13,7 +13,7 @@ interface CamisaContext {
 const CamisaContext = createContext<CamisaContext>({} as CamisaContext);
 
 export const CamisaInitialState: Camisa = {
-  id: '',
+  idCamisa: '',
   nomeCamisa: '',
   descricao: '',
   valor: 0.00,

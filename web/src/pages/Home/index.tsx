@@ -23,7 +23,7 @@ export function Home(): JSX.Element {
   return (
     <Layout>
       <div className={styles.container}>
-        {camisas.map((camisa) => <CardCamisa key={camisa.id} camisa={camisa} />)}
+        {camisas.map((camisa) => <CardCamisa key={camisa.idCamisa} camisa={camisa} />)}
       </div>
     </Layout>
   );
