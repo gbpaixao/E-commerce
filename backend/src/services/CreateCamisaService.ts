@@ -18,7 +18,6 @@ class CreateCamisaService {
       .into('Camisa')
 
     const idCamisa = camisaDB[0]
-    
 
     /* Fotos */
     const { pictures, mainPicture } = camisa
