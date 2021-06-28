@@ -36,20 +36,20 @@ class CreateCamisaService {
       tamanho: camisaDB[0].tamanho,
     }
 
-    /* Fotos */
-    const { pictures, mainPicture } = camisa
-    pictures.push({
-      titulo: mainPicture.titulo,
-      url: mainPicture.url,
-    })
-    pictures.map(async (picture) => {
-      await database
-        .insert(
-          { ...picture, Camisa_idCamisa: camisaResponse.idCamisa },
-          'idFoto'
-        )
-        .into('Foto')
-    })
+    // /* Fotos */
+    // const { pictures, mainPicture } = camisa
+    // pictures.push({
+    //   titulo: mainPicture.titulo,
+    //   url: mainPicture.url,
+    // })
+    // pictures.map(async (picture) => {
+    //   await database
+    //     .insert(
+    //       { ...picture, Camisa_idCamisa: camisaResponse.idCamisa },
+    //       'idFoto'
+    //     )
+    //     .into('Foto')
+    // })
 
     return camisaResponse
   }
