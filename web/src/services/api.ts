@@ -3,12 +3,16 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import notifyResponse from './notifyResponse';
 
+const baseURL = process.env.NODE_ENV === 'development'
+  ? 'https://localhost:3000/api'
+  : 'https://e-commerce-ufs.herokuapp.com/';
+
 class Api {
   #axiosInstance : AxiosInstance;
 
   constructor() {
     this.#axiosInstance = axios.create({
-      baseURL: 'https://localhost:3000/api',
+      baseURL,
       headers: {
         'Content-Type': 'application/json',
       },
