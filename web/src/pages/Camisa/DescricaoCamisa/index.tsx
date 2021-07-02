@@ -12,6 +12,7 @@ import { BodyParams } from '../../../types/BodyParams';
 import { styles } from './styles';
 import { useCamisa } from '../../../contexts/CamisaContext';
 import { useCarrinho } from '../../../contexts/CarrinhoContext';
+import { getRandomTshirt } from '../../../server/getRandomTshirt';
 
 export default function DescricaoCamisa():JSX.Element {
   const { camisa, setCamisa } = useCamisa();
@@ -26,16 +27,16 @@ export default function DescricaoCamisa():JSX.Element {
   const history = useHistory();
 
   /* Fetch from server */
-  const { id: idCamisa } = useParams<BodyParams>();
-  useEffect(() => {
-    api.get(`/camisas/${idCamisa}`, undefined, false).then((res) => setCamisa({ ...res.data }));
-  }, [idCamisa]);
+  // const { id: idCamisa } = useParams<BodyParams>();
+  // useEffect(() => {
+  //   api.get(`/camisas/${idCamisa}`, undefined, false).then((res) => setCamisa({ ...res.data }));
+  // }, [idCamisa]);
 
   /* Handle Submit */
   const handleSubmit = async () => {
     try {
       setSubmitting(true);
-      addItem(camisa.id, itemCarrinho);
+      addItem(camisa.idCamisa, itemCarrinho);
 
       history.push('/carrinho');
     } catch (error) {
@@ -50,20 +51,48 @@ export default function DescricaoCamisa():JSX.Element {
         <div className={styles.mainContainer}>
           <div className={styles.picturesContainer}>
             <div className={styles.picturesContainerThumbnails}>
-              {camisa.pictures.map((picture, index) => (
-                <Image
+              {/* {camisa.pictures.map((picture, index) => ( */}
+              <Image
                   // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  src={picture.url}
-                  width={75}
-                  height={95}
-                />
-              ))}
+                // key={index}
+                src={getRandomTshirt()}
+                width={75}
+                height={95}
+              />
+              <Image
+                  // eslint-disable-next-line react/no-array-index-key
+                // key={index}
+                src={getRandomTshirt()}
+                width={75}
+                height={95}
+              />
+              <Image
+                  // eslint-disable-next-line react/no-array-index-key
+                // key={index}
+                src={getRandomTshirt()}
+                width={75}
+                height={95}
+              />
+              <Image
+                  // eslint-disable-next-line react/no-array-index-key
+                // key={index}
+                src={getRandomTshirt()}
+                width={75}
+                height={95}
+              />
+              <Image
+                  // eslint-disable-next-line react/no-array-index-key
+                // key={index}
+                src={getRandomTshirt()}
+                width={75}
+                height={95}
+              />
+              {/* ))} */}
             </div>
 
             <div>
               <Image
-                src={camisa.mainPicture.url}
+                src={getRandomTshirt()}
                 width={300}
                 height={440}
               />
@@ -126,7 +155,7 @@ export default function DescricaoCamisa():JSX.Element {
 
           <div className={styles.shippingContainer}>
             <div>
-              <h1>{`R$ ${camisa.valor.toFixed(2).replace('.', ',')}`}</h1>
+              <h1>{`R$ ${camisa.valor?.toFixed(2).replace('.', ',')}`}</h1>
               <small>{`6x de R$ ${(camisa.valor / 6).toFixed(2).replace('.', ',')}`}</small>
             </div>
 
