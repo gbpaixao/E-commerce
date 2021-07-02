@@ -3,7 +3,7 @@ import database from '../database'
 
 class UpdateCamisaService {
   async execute(id: number, camisa: Camisa) {
-    const { pictures, mainPicture } = camisa
+    // const { pictures, mainPicture } = camisa
 
     delete camisa.pictures
     delete camisa.mainPicture
