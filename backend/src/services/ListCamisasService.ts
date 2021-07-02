@@ -5,12 +5,14 @@ class ListCamisasService {
     const camisas = await database
       .clone()
       .select(
-        'idCamisa',
+        // 'idCamisa',
+        'idCamisa as id',
         'nome as nomeCamisa',
         'descricao',
         'valor',
         'estoque',
-        'tamanho'
+        'tamanho',
+        'tipo'
       )
       .from('Camisa')
       .where('idCamisa', id)
