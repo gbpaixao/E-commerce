@@ -6,7 +6,6 @@
   "extends": [
     "plugin:react/recommended",
     "airbnb",
-    "prettier",
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -21,7 +20,12 @@
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".tsx"]
+      }
+    ],
     "import/prefer-default-export": "off",
     "camelcase": "off",
     "@typescript-eslint/ban-types": "off",
@@ -34,19 +38,30 @@
       }
     ],
     "no-use-before-define": "off",
-    "react/require-default-props": [1, { "ignoreFunctionalComponents": true }],
+    "react/require-default-props": [
+      1,
+      {
+        "ignoreFunctionalComponents": true
+      }
+    ],
     "no-param-reassign": "warn",
     "react/react-in-jsx-scope": "off",
-    "jsx-a11y/label-has-associated-control": ["error", {
-      "required": {
-        "some": ["nesting", "id"]
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
       }
-    }],
-    "jsx-a11y/label-has-for": ["error", {
-      "required": {
-        "some": ["nesting", "id"]
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
       }
-    }]
+    ]
   },
   "settings": {
     "import/resolver": {

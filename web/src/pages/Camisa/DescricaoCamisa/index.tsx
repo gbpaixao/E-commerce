@@ -14,7 +14,7 @@ import { useCamisa } from '../../../contexts/CamisaContext';
 import { useCarrinho } from '../../../contexts/CarrinhoContext';
 import { getRandomTshirt } from '../../../server/getRandomTshirt';
 
-export default function DescricaoCamisa():JSX.Element {
+export default function DescricaoCamisa(): JSX.Element {
   const { camisa, setCamisa } = useCamisa();
   const { addItem } = useCarrinho();
   const [itemCarrinho, setItemCarrinho] = useState({
@@ -26,11 +26,7 @@ export default function DescricaoCamisa():JSX.Element {
 
   const history = useHistory();
 
-  /* Fetch from server */
-  // const { id: idCamisa } = useParams<BodyParams>();
-  // useEffect(() => {
-  //   api.get(`/camisas/${idCamisa}`, undefined, false).then((res) => setCamisa({ ...res.data }));
-  // }, [idCamisa]);
+  const admin = true;
 
   /* Handle Submit */
   const handleSubmit = async () => {
@@ -51,51 +47,15 @@ export default function DescricaoCamisa():JSX.Element {
         <div className={styles.mainContainer}>
           <div className={styles.picturesContainer}>
             <div className={styles.picturesContainerThumbnails}>
-              {/* {camisa.pictures.map((picture, index) => ( */}
-              <Image
-                  // eslint-disable-next-line react/no-array-index-key
-                // key={index}
-                src={getRandomTshirt()}
-                width={75}
-                height={95}
-              />
-              <Image
-                  // eslint-disable-next-line react/no-array-index-key
-                // key={index}
-                src={getRandomTshirt()}
-                width={75}
-                height={95}
-              />
-              <Image
-                  // eslint-disable-next-line react/no-array-index-key
-                // key={index}
-                src={getRandomTshirt()}
-                width={75}
-                height={95}
-              />
-              <Image
-                  // eslint-disable-next-line react/no-array-index-key
-                // key={index}
-                src={getRandomTshirt()}
-                width={75}
-                height={95}
-              />
-              <Image
-                  // eslint-disable-next-line react/no-array-index-key
-                // key={index}
-                src={getRandomTshirt()}
-                width={75}
-                height={95}
-              />
-              {/* ))} */}
+              <Image src={getRandomTshirt()} width={75} height={95} />
+              <Image src={getRandomTshirt()} width={75} height={95} />
+              <Image src={getRandomTshirt()} width={75} height={95} />
+              <Image src={getRandomTshirt()} width={75} height={95} />
+              <Image src={getRandomTshirt()} width={75} height={95} />
             </div>
 
             <div>
-              <Image
-                src={getRandomTshirt()}
-                width={300}
-                height={440}
-              />
+              <Image src={getRandomTshirt()} width={300} height={440} />
             </div>
           </div>
 
@@ -104,8 +64,11 @@ export default function DescricaoCamisa():JSX.Element {
 
             <p>{camisa.descricao}</p>
 
+            {/* { admin && ( */}
             <Form.Group controlId="tamanho-camisa">
-              <Form.Label><b>Tamanho</b></Form.Label>
+              <Form.Label>
+                <b>Tamanho</b>
+              </Form.Label>
               <br />
               <Button
                 style={{
@@ -118,9 +81,10 @@ export default function DescricaoCamisa():JSX.Element {
               >
                 {camisa.tamanho}
               </Button>
-
             </Form.Group>
+            {/* )} */}
 
+            {/* { admin && ( */}
             <div className={styles.descriptionContainerInputGroup}>
               <Form.Group controlId="nome-jogador" style={{ width: '200px' }}>
                 <Form.Label>
@@ -129,34 +93,49 @@ export default function DescricaoCamisa():JSX.Element {
                 <Form.Control
                   aria-label="nome-jogador"
                   value={itemCarrinho.nomeJogador}
-                  onChange={
-                    (event) => setItemCarrinho({ ...itemCarrinho, nomeJogador: event.target.value })
-                  }
+                  onChange={(event) => setItemCarrinho({
+                    ...itemCarrinho,
+                    nomeJogador: event.target.value,
+                  })}
                   maxLength={12}
                 />
-                <Form.Text><small>Máximo de 12 caracteres</small></Form.Text>
+                <Form.Text>
+                  <small>Máximo de 12 caracteres</small>
+                </Form.Text>
               </Form.Group>
 
               <Form.Group controlId="numero-jogador" style={{ width: '126px' }}>
-                <Form.Label><b>Nº do Jogador</b></Form.Label>
+                <Form.Label>
+                  <b>Nº do Jogador</b>
+                </Form.Label>
                 <Form.Control
                   aria-label="numero-jogador"
                   value={itemCarrinho.numeroJogador}
                   onChange={(event) => {
-                    setItemCarrinho({ ...itemCarrinho, numeroJogador: event.target.value });
+                    setItemCarrinho({
+                      ...itemCarrinho,
+                      numeroJogador: event.target.value,
+                    });
                   }}
                   maxLength={2}
                 />
-                <Form.Text><small>Máximo de 2 caracteres</small></Form.Text>
+                <Form.Text>
+                  <small>Máximo de 2 caracteres</small>
+                </Form.Text>
               </Form.Group>
             </div>
-
+            {/* )} */}
           </div>
 
           <div className={styles.shippingContainer}>
             <div>
               <h1>{`R$ ${camisa.valor?.toFixed(2).replace('.', ',')}`}</h1>
-              <small>{`6x de R$ ${(camisa.valor / 6).toFixed(2).replace('.', ',')}`}</small>
+              <small>
+                {`6x de R$ ${(camisa.valor / 6)
+                  .toFixed(2)
+                  .replace('.', ',')}`}
+
+              </small>
             </div>
 
             <div>
@@ -170,9 +149,7 @@ export default function DescricaoCamisa():JSX.Element {
                   estoque={camisa.estoque}
                 />
                 <Form.Text>
-                  <small>
-                    {`${camisa.estoque} unidades restantes`}
-                  </small>
+                  <small>{`${camisa.estoque} unidades restantes`}</small>
                 </Form.Text>
               </Form.Group>
             </div>
@@ -190,32 +167,39 @@ export default function DescricaoCamisa():JSX.Element {
             </div>
 
             <div className={styles.addToCart}>
-              {/* <Button style={{ backgroundColor: '#5227CC', borderColor: '#5227CC' }}>
-                Adicionar ao carrinho
-              </Button> */}
-
               <Button
                 type="submit"
                 onClick={handleSubmit}
-                style={{ backgroundColor: '#5227CC', borderColor: '#5227CC', width: '100%' }}
+                style={{
+                  backgroundColor: '#5227CC',
+                  borderColor: '#5227CC',
+                  width: '100%',
+                }}
                 disabled={isSubmitting}
               >
-                {isSubmitting
-                  ? (
-                    <div style={{
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+                {isSubmitting ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-around',
                     }}
-                    >
-                      <Spinner as="span" size="sm" animation="border" role="status" />
-                      {'  Adicionando...'}
-                    </div>
-                  )
-                  : 'Adicionar ao carrinho'}
+                  >
+                    <Spinner
+                      as="span"
+                      size="sm"
+                      animation="border"
+                      role="status"
+                    />
+                    {'  Adicionando...'}
+                  </div>
+                ) : (
+                  'Adicionar ao carrinho'
+                )}
               </Button>
             </div>
           </div>
         </div>
-
       </Form>
     </Layout>
   );

@@ -1,5 +1,5 @@
-import { Camisa } from '../@types/Camisa'
-import database from '../database'
+import { Camisa } from '../@types/Camisa';
+import database from '../database';
 
 class CreateCamisaService {
   async execute(camisa: Camisa) {
@@ -13,7 +13,7 @@ class CreateCamisaService {
       estoque: camisa.estoque,
       tipo: camisa.tipo,
       administrador_idAdministrador: 1,
-    }
+    };
 
     const camisaDB = await database
       .clone()
@@ -26,7 +26,7 @@ class CreateCamisaService {
         'estoque',
         'tamanho',
       ])
-      .into('Camisa')
+      .into('Camisa');
 
     // /* Fotos */
     // const { pictures, mainPicture } = camisa
@@ -43,8 +43,8 @@ class CreateCamisaService {
     //     .into('Foto')
     // })
 
-    return camisaDB
+    return camisaDB;
   }
 }
 
-export { CreateCamisaService }
+export { CreateCamisaService };
