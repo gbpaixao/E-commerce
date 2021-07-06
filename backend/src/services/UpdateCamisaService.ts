@@ -14,10 +14,12 @@ class UpdateCamisaService {
       .from('Camisa')
       .where('idCamisa', id)
 
-    /* Atualizar imagem */
+    if (camisaAtualizada.length === 0)
+      throw new Error("Esta camisa não existe")
 
+    /* Atualizar imagem */
+    
     delete camisaAtualizada[0].administrador_idAdministrador
-    console.log(`camisaAtualizada`, camisaAtualizada)
 
     return camisaAtualizada
   }
