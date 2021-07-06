@@ -3,10 +3,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import notifyResponse from './notifyResponse';
 
-const baseURL =
-  process.env.NODE_ENV === 'development'
-    ? 'https://localhost:3000/api'
-    : 'https://e-commerce-ufs.herokuapp.com/';
+const baseURL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:3333'
+  : 'https://e-commerce-ufs.herokuapp.com/';
 
 class Api {
   #axiosInstance: AxiosInstance;
@@ -30,7 +29,7 @@ class Api {
       (error) => {
         // request error
         Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -45,14 +44,14 @@ class Api {
     url: string,
     config?: AxiosRequestConfig,
     showNotification = true,
-    notificationText?: string
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.get(url, config);
       notifyResponse(response.status, showNotification, notificationText);
       return response;
     } catch (error) {
-      console.log(`error`, error);
+      console.log('error', error);
       notifyResponse(error.response.status);
       return undefined as unknown as AxiosResponse;
     }
@@ -71,7 +70,7 @@ class Api {
     data?: any,
     config?: AxiosRequestConfig,
     showNotification = true,
-    notificationText?: string
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.post(url, data, config);
@@ -96,7 +95,7 @@ class Api {
     data?: any,
     config?: AxiosRequestConfig,
     showNotification = true,
-    notificationText?: string
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.put(url, data, config);
@@ -119,7 +118,7 @@ class Api {
     url: string,
     config?: AxiosRequestConfig,
     showNotification = true,
-    notificationText?: string
+    notificationText?: string,
   ): Promise<AxiosResponse<any>> {
     try {
       const response = await this.#axiosInstance.delete(url, config);
