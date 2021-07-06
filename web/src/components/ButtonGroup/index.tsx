@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from 'react-bootstrap';
 
 interface Props {
   array: string[],
   callback: (childData: string) => void,
+  defaultValue?: string,
 }
 
-export default function ButtonGroup({ array, callback }: Props):JSX.Element {
+export default function ButtonGroup({ array, callback, defaultValue }: Props):JSX.Element {
   const [selected, setSelected] = useState<boolean[]>(
     Array.from<boolean>({ length: array.length }).fill(false),
   );
+
+  useEffect(() => {
+    if (defaultValue) {
+      const index = array.indexOf(defaultValue);
+      setSelected([...selected.slice(0, index), true, ...selected.slice(index)]);
+    }
+  }, []);
 
   return (
     <div>
