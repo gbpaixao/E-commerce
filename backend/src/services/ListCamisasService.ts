@@ -19,7 +19,7 @@ class ListCamisasService {
 
     console.log(`camisas`, camisas)
 
-    return camisas
+    return camisas[0]
   }
 }
 

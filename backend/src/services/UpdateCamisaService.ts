@@ -21,7 +21,7 @@ class UpdateCamisaService {
     
     delete camisaAtualizada[0].administrador_idAdministrador
 
-    return camisaAtualizada
+    return camisaAtualizada[0]
   }
 }
 
