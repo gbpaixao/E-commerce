@@ -18,19 +18,16 @@ class Api {
       },
     });
 
-    this.#axiosInstance.interceptors.request.use(
-      (config) => {
-        // request success
-        const token = 'asdasdasdasd'; /* Pegar da ContextAPI */
-        config.headers.Authorization = `Bearer ${token}`;
+    this.#axiosInstance.interceptors.request.use((config) => {
+      const authToken = localStorage.getItem('authToken');
+      config.headers.Authorization = `Bearer ${authToken}`;
 
-        return config;
-      },
-      (error) => {
-        // request error
-        Promise.reject(error);
-      },
-    );
+      return config;
+    },
+    (error) => {
+      // request error
+      Promise.reject(error);
+    });
   }
 
   /**
