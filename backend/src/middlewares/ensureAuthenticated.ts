@@ -18,7 +18,6 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
     const { sub } = verify(token, '06de5b4fe24b14d67b1a53a7d5f4f7cb') as IPayload;
     
     request.userId = sub;
-    console.log(`request.userId`, request.userId)
     return next();
   } catch (err) {
     return response.status(401).end();

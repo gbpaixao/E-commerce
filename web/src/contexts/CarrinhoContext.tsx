@@ -45,7 +45,7 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     const quantidadeAtual = item?.quantidade || 0;
     const quantidade = quantidadeAtual + 1;
 
-    if (quantidade > camisa[0].estoque) {
+    if (quantidade > camisa.estoque) {
       throw new Error('Quantidade solicitada fora de estoque');
     }
 
@@ -53,7 +53,7 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
       item.quantidade = quantidade;
     } else {
       const novoItem: Item = {
-        camisa: camisa[0],
+        camisa,
         ...itemCarrinho,
       };
 
