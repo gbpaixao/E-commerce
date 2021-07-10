@@ -31,7 +31,7 @@ export function Navbar(): JSX.Element {
         <button
           type="button"
           style={{ backgroundColor: 'transparent', border: 'none', color: '#FFF' }}
-          onClick={() => history.push('/')}
+          onClick={() => history.push('/home')}
         >
           <h4>RedsAju</h4>
         </button>

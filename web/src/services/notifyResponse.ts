@@ -9,6 +9,10 @@ export default function notifyResponse(status: number, show = true, text?: strin
       case 201: toast.success(text || 'Cadastro realizado com sucesso! ✨');
         break;
 
+      case 400: toast.error(text || 'Email e/ou senha inválidos! 😢'); break;
+
+      case 401: toast.error(text || 'Sua sessão expirou, faça o login novamente! 😢'); break;
+
       default:
         toast.error('Falha no servidor! Tente novamente mais tarde. 😢');
     }

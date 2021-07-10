@@ -58,7 +58,7 @@ export default function DescricaoCamisa(): JSX.Element {
 
       await api.delete(`/camisas/${camisa.idCamisa}`);
 
-      history.push('/');
+      history.push('/home');
     } catch (error) {
       toast.error('Houve algum problema!');
     }
