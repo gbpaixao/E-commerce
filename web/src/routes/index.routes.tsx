@@ -10,7 +10,7 @@ import { Login } from '../pages/Login';
 import { AcompanharPedido } from '../pages/AcompanharPedido';
 import { camisaRoutes } from './camisa.routes';
 
-const Routes = ():JSX.Element => (
+const Routes = (): JSX.Element => (
   <CarrinhoContextProvider>
     <CamisaContextProvider>
       <BrowserRouter>
