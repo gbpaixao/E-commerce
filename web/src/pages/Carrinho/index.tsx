@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import {
-  Alert, Col, Image, Row,
+  Alert, Col, Image,
 } from 'react-bootstrap';
 import { FiTrash2 } from 'react-icons/fi';
 
+import { useStripe } from '@stripe/react-stripe-js';
 import { Layout } from '../../components/Layout';
 import ItemsAmount from '../../components/ItemsAmount';
 import { useCarrinho } from '../../contexts/CarrinhoContext';
@@ -11,11 +11,37 @@ import { useCarrinho } from '../../contexts/CarrinhoContext';
 import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
+import api from '../../services/api';
 
 export function Carrinho(): JSX.Element {
   const { carrinho, removeItem, updateItemAmount } = useCarrinho();
+  const stripe = useStripe();
 
-  console.log(carrinho);
+  async function finalizarPedido() {
+    if (!stripe) return;
+
+    const unitAmount = carrinho.items.reduce((total, item) => {
+      const { camisa, quantidade } = item;
+
+      return (camisa.valor * quantidade) + total;
+    }, 0);
+
+    try {
+      const response = await api.post('/pagamento/checkout', {
+        unit_amount: unitAmount * 100,
+        product_data: {
+          name: 'test',
+          description: 'pedido de test',
+        },
+      });
+
+      const { sessionId } = response.data;
+
+      stripe.redirectToCheckout({ sessionId });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <Layout>
@@ -64,6 +90,9 @@ export function Carrinho(): JSX.Element {
               </Col>
             </div>
           ))}
+          <div>
+            <button type="button" onClick={finalizarPedido}>finalizar pedido</button>
+          </div>
         </div>
       ) : (
         <Alert variant="secondary">
