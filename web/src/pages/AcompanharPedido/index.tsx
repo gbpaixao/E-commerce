@@ -1,7 +1,6 @@
 import {
-  Alert, Col, Image, Row, Button,
+  Col, Image, Button,
 } from 'react-bootstrap';
-import { FiHome } from 'react-icons/fi';
 import { ImHome } from 'react-icons/im';
 import { RiStore3Fill } from 'react-icons/ri';
 import { MdLocalShipping } from 'react-icons/md';
@@ -11,21 +10,21 @@ import ItemsAmount from '../../components/ItemsAmount';
 import { useCarrinho } from '../../contexts/CarrinhoContext';
 
 import { formatCurrency } from '../../utils/utils';
-import { styles } from './styles';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
+import { styles } from './styles';
 
 export function AcompanharPedido(): JSX.Element {
   return (
     <Layout>
 
       <div>
-        <div className="d-flex align-items-center" style={{ background: 'rgba(222, 226, 230, 1)', borderRadius: '10px' }}>
+        <div className={styles.divCancel}>
           <Image
             src={getRandomTshirt()}
             height={140}
             width={104}
             thumbnail
-            style={{ marginLeft: '5rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+            style={{ marginLeft: '50px', marginTop: '0.5rem', marginBottom: '0.5rem' }}
           />
           <Col>
             <p>N°</p>
@@ -41,7 +40,7 @@ export function AcompanharPedido(): JSX.Element {
           </Col>
           <Col style={{
             minWidth: '10rem',
-            marginRight: '5rem',
+            marginRight: '20px',
             marginLeft: '2rem',
           }}
           >
@@ -54,27 +53,10 @@ export function AcompanharPedido(): JSX.Element {
           </Col>
         </div>
 
-        <div
-          className="d-flex align-items-center"
-          style={{
-            marginTop: '2rem',
-            marginLeft: '5rem',
-            marginRight: '5rem',
-          }}
-        >
+        <div className={styles.divRadios}>
 
           <div>
-            <div
-              style={{
-                width: '5rem',
-                height: '5rem',
-                background: 'rgba(222, 226, 230, 1)',
-                borderRadius: '100px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-              }}
-            >
+            <div className={styles.radioDiv}>
               <RiStore3Fill color="#5227CC" size={30} />
             </div>
             <div
@@ -94,16 +76,7 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div style={{
-              width: '5rem',
-              height: '5rem',
-              background: 'rgba(222, 226, 230, 1)',
-              borderRadius: '100px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-            }}
-            >
+            <div className={styles.radioDiv}>
               <MdLocalShipping color="#5227CC" size={30} />
             </div>
             <div
@@ -123,16 +96,7 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div style={{
-              width: '5rem',
-              height: '5rem',
-              background: 'rgba(222, 226, 230, 1)',
-              borderRadius: '100px',
-              alignItems: 'center',
-              justifyContent: 'center',
-              display: 'flex',
-            }}
-            >
+            <div className={styles.radioDiv}>
               <ImHome color="#5227CC" size={30} />
             </div>
             <div
@@ -148,13 +112,7 @@ export function AcompanharPedido(): JSX.Element {
         </div>
 
         <div
-          style={{
-            justifyContent: 'space-between',
-            display: 'flex',
-            marginRight: '5rem',
-            marginLeft: '5rem',
-            marginTop: '2rem',
-          }}
+          className={styles.divLast}
         >
 
           <div
@@ -197,7 +155,6 @@ export function AcompanharPedido(): JSX.Element {
           >
             <div
               style={{
-                background: 'rgba(222, 226, 230, 1)',
                 marginLeft: '1rem',
                 marginTop: '1rem',
               }}
@@ -208,7 +165,6 @@ export function AcompanharPedido(): JSX.Element {
 
             <div
               style={{
-                background: 'rgba(222, 226, 230, 1)',
                 marginLeft: '1rem',
                 marginTop: '1rem',
               }}
@@ -219,7 +175,6 @@ export function AcompanharPedido(): JSX.Element {
 
             <div
               style={{
-                background: 'rgba(222, 226, 230, 1)',
                 marginLeft: '1rem',
                 marginTop: '1rem',
               }}
