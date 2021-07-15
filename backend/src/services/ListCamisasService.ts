@@ -17,8 +17,6 @@ class ListCamisasService {
       .from('Camisa')
       .where('idCamisa', id)
 
-    console.log(`camisas`, camisas)
-
     return camisas[0]
   }
 }

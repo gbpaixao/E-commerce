@@ -6,6 +6,7 @@ import { CamisaContextProvider } from '../contexts/CamisaContext';
 import { CarrinhoContextProvider } from '../contexts/CarrinhoContext';
 import { Carrinho } from '../pages/Carrinho';
 import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
 import { camisaRoutes } from './camisa.routes';
 
 const Routes = ():JSX.Element => (
@@ -13,7 +14,8 @@ const Routes = ():JSX.Element => (
     <CamisaContextProvider>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Login} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/carrinho" component={Carrinho} />
 
           {camisaRoutes.map((entry) => (<Route {...entry} />))}

@@ -93,7 +93,7 @@ createServer({
 
         return camisa;
       },
-      { timing: 3000 }
+      { timing: 3000 },
     );
   },
 });
