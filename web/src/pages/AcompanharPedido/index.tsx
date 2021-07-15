@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Col, Image, Button,
@@ -6,6 +7,10 @@ import { ImHome } from 'react-icons/im';
 import { RiStore3Fill } from 'react-icons/ri';
 import { MdLocalShipping } from 'react-icons/md';
 
+import bsCustomFileInput from 'bs-custom-file-input';
+import { useHistory } from 'react-router-dom';
+import { FormEvent } from 'react';
+import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
 import ItemsAmount from '../../components/ItemsAmount';
 import { useCarrinho } from '../../contexts/CarrinhoContext';
@@ -13,6 +18,9 @@ import { useCarrinho } from '../../contexts/CarrinhoContext';
 import { formatCurrency } from '../../utils/utils';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
 import { styles } from './styles';
+import { Pedido } from '../../types/PedidoMetadados';
+import { usePedido } from '../../contexts/PedidoContext';
+import api from '../../services/api';
 
 function MudaCinzaLoja(
   values: number,
@@ -74,6 +82,31 @@ const hoje = `${dd}/${mm}/${yyyy}`;
 const entrega = new Date(yyyy, Number(mm), Number(dd));
 
 export function AcompanharPedido(): JSX.Element {
+  bsCustomFileInput.init();
+
+  const { pedido, setPedido } = usePedido();
+
+  const history = useHistory();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const clienteId = 1;
+    const pedidoId = 1;
+
+    setSubmitting(true);
+    try {
+      const response = await api.get(`/pedidos/${clienteId}/${pedidoId}`, undefined, false);
+
+      setPedido(response.data.pedido);
+      history.push('/home');
+      /* Adicionar à contextAPI */
+    } catch (error) {
+      console.error(error);
+      toast.error('Houve algum problema!');
+    }
+    setSubmitting(false);
+  };
   return (
     <Layout>
 
@@ -88,7 +121,8 @@ export function AcompanharPedido(): JSX.Element {
           />
           <Col>
             <p>N°</p>
-            <b>43612</b>
+            <b>1215</b>
+
           </Col>
           <Col style={{ minWidth: '15rem' }}>
             <p>Previsão de entrega</p>
@@ -251,4 +285,7 @@ export function AcompanharPedido(): JSX.Element {
     </Layout>
 
   );
+}
+function setSubmitting(arg0: boolean) {
+  throw new Error('Function not implemented.');
 }
