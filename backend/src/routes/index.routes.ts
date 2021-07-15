@@ -14,14 +14,10 @@ const authenticateController = new AuthenticateController()
 routes.get('/', (req, res) => res.send("api rodando"))
 routes.post('/auth', authenticateController.handle)
 
-routes.get('/pagamento/public-key', (req, res) => {
-  res.send(process.env.STRIPE_PUBLIC_KEY)
-});
-
+routes.use('/pagamento', pagamentoRoutes);
 routes.use(ensureAuthenticated)
 routes.use(loginRoutes)
 routes.use(camisaRoutes)
 routes.use(pedidoRoutes)
-routes.use('/pagamento', pagamentoRoutes);
 
 export default routes
