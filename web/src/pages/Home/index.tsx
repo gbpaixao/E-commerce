@@ -17,7 +17,9 @@ export function Home(): JSX.Element {
     async function getCamisas() {
       const response = await api.get('/camisas', undefined, false);
 
-      setCamisas(response.data);
+      if (response) {
+        setCamisas(response.data);
+      }
     }
 
     getCamisas();

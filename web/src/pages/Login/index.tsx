@@ -57,9 +57,15 @@ export function Login(): JSX.Element {
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <div className="d-flex ">
-
+    <div
+      className="d-flex justify-content-center align-items-center px-5"
+      style={{ background: '#DEE2E6', width: '100%' }}
+    >
+      <Col>
+        <div className="d-flex flex-column align-items-center">
+          <h3 className="mb-4">Login</h3>
+          <h4 className="mb-5">Seja bem-vindo ao RedsAju</h4>
+        </div>
         <Form>
           <FormGroup>
             <FormControl
@@ -115,15 +121,22 @@ export function Login(): JSX.Element {
                 Ainda não é um membro?
               </p>
               <p className="pl-1 font-weight-bold">
-                <a href="http://localhost:3000/cadastro" style={{ color: '#6C757D' }}>Faça o cadastro</a>
+                <button
+                  onClick={() => history.push('/cadastro')}
+                  style={{
+                    color: '#6C757D', backgroundColor: 'transparent', border: 0, fontWeight: 'bold',
+                  }}
+                  type="button"
+                >
+                  <a href=" " style={{ color: '#6C757D' }}>Faça o Cadastro</a>
+
+                </button>
               </p>
             </div>
           </div>
         </Form>
-        <div className="d-flex vh-100 w-50">
-          <img src={loginImg} alt="Compras online" />
-        </div>
-      </div>
+      </Col>
+      <img className="d-flex vh-100" sizes="" src={loginImg} alt="Compras online" />
     </div>
   );
 }
