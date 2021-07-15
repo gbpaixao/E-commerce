@@ -9,7 +9,7 @@ class CreateCamisaController {
 
     const camisaId = await createCamisaService.execute(camisa)
 
-    return response.json({ camisaId: camisaId })
+    return response.json({ camisa: camisaId })
   }
 }
 

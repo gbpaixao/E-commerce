@@ -4,11 +4,22 @@ class ListCamisasService {
   async execute(id: number) {
     const camisas = await database
       .clone()
-      .select('idCamisa', 'nome', 'descricao', 'valor', 'estoque', 'tamanho')
+      .select(
+        // 'idCamisa',
+        'idCamisa as id',
+        'nome as nomeCamisa',
+        'descricao',
+        'valor',
+        'estoque',
+        'tamanho',
+        'tipo'
+      )
       .from('Camisa')
       .where('idCamisa', id)
 
-    return camisas
+    console.log(`camisas`, camisas)
+
+    return camisas[0]
   }
 }
 

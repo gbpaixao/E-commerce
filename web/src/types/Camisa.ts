@@ -1,10 +1,10 @@
 export interface Camisa {
-  id: string;
-  nomeCamisa: string
-  descricao: string
-  valor: number
-  tamanho: string
-  estoque: number
+  idCamisa: string;
+  nomeCamisa: string;
+  descricao: string;
+  valor: number;
+  tamanho: string;
+  estoque: number;
   pictures: {
     titulo: string;
     url: string;
@@ -13,6 +13,6 @@ export interface Camisa {
     titulo: string;
     url: string;
   };
-  fornecedor: string
-  tipo: string
+  fornecedor: string;
+  tipo: string;
 }

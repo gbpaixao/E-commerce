@@ -1,12 +1,16 @@
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
+import 'express-async-errors';
+import cors from 'cors'
+
 import routes from './routes/index.routes'
 
 const server = express()
 
+server.use(cors())
 server.use(express.json())
 server.use(routes)
 
-server.use((err: Error, request: Request, response: Response) => {
+server.use((err: Error, request: Request, response: Response, next: NextFunction) => {
   if (err instanceof Error) {
     return response.status(400).json({
       error: err.message,

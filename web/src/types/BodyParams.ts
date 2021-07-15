@@ -1,3 +1,3 @@
 export interface BodyParams {
-  id: string
+  id: string;
 }

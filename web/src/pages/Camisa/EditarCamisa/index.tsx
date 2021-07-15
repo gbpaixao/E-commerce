@@ -13,11 +13,10 @@ import ItemsAmount from '../../../components/ItemsAmount';
 import api from '../../../services/api';
 import { useCamisa } from '../../../contexts/CamisaContext';
 
-export default function CadastroCamisa(): JSX.Element {
+export default function EditarCamisa(): JSX.Element {
   bsCustomFileInput.init();
 
   const { camisa, setCamisa } = useCamisa();
-  const [estoque, setEstoque] = useState<number>(1);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   const history = useHistory();
@@ -26,16 +25,14 @@ export default function CadastroCamisa(): JSX.Element {
     e.preventDefault();
 
     setSubmitting(true);
-    try {
-      const response = await api.post('/camisas', {
-        camisa,
-      }, undefined, false);
 
-      setCamisa(response.data.camisa);
-      history.push('/home');
-      /* Adicionar à contextAPI */
+    try {
+      const response = await api.put(`/camisas/${camisa.idCamisa}`, {
+        camisa,
+      }, undefined, true, 'Camisa alterada com sucesso!');
+
+      history.push(`/descricaoCamisa/${camisa.idCamisa}`);
     } catch (error) {
-      console.error(error);
       toast.error('Houve algum problema!');
     }
     setSubmitting(false);
@@ -45,14 +42,14 @@ export default function CadastroCamisa(): JSX.Element {
     <Layout>
       <Form>
         <div className={styles.mainContainer}>
-          <h1>Cadastro de Camisa</h1>
+          <h1>Edição de Camisa</h1>
 
           <div className={styles.contentContainer}>
             <div className={styles.formContainer}>
               <Form.Group controlId="nome">
                 <Form.Control
                   aria-label="nome"
-                  value={camisa.nomeCamisa}
+                  value={camisa?.nomeCamisa}
                   onChange={(event) => setCamisa({ ...camisa, nomeCamisa: event.target.value })}
                   placeholder="Nome"
                 />
@@ -61,18 +58,9 @@ export default function CadastroCamisa(): JSX.Element {
               <Form.Group controlId="descricao">
                 <Form.Control
                   aria-label="descricao"
-                  value={camisa.descricao}
+                  value={camisa?.descricao}
                   onChange={(event) => setCamisa({ ...camisa, descricao: event.target.value })}
                   placeholder="Descrição"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="fornecedor">
-                <Form.Control
-                  aria-label="fornecedor"
-                  value={camisa.fornecedor}
-                  onChange={(event) => setCamisa({ ...camisa, fornecedor: event.target.value })}
-                  placeholder="Fornecedor"
                 />
               </Form.Group>
 
@@ -83,7 +71,7 @@ export default function CadastroCamisa(): JSX.Element {
                   </InputGroup.Prepend>
                   <Form.Control
                     aria-label="valor"
-                    value={camisa.valor}
+                    value={camisa?.valor}
                     onChange={(event) => {
                       if (event.target.value) {
                         setCamisa({ ...camisa, valor: parseFloat(event.target.value) });
@@ -101,19 +89,19 @@ export default function CadastroCamisa(): JSX.Element {
                 <ButtonGroup
                   array={['F', 'M']}
                   callback={(tipo) => setCamisa({ ...camisa, tipo })}
+                  defaultValue={camisa.tipo}
                 />
               </Form.Group>
 
               <Form.Group controlId="estoque">
                 <Form.Label><b>Quantidade</b></Form.Label>
                 <ItemsAmount
-                  counter={estoque}
+                  counter={camisa.estoque}
                   setCounter={
-                (qtde) => {
-                  setEstoque(qtde);
-                  setCamisa({ ...camisa, estoque: qtde });
+                    (qtde) => {
+                      setCamisa({ ...camisa, estoque: qtde });
+                    }
                 }
-            }
                 />
               </Form.Group>
 
@@ -122,6 +110,7 @@ export default function CadastroCamisa(): JSX.Element {
                 <ButtonGroup
                   array={['P', 'M', 'G']}
                   callback={(tamanho) => setCamisa({ ...camisa, tamanho })}
+                  defaultValue={camisa.tamanho}
                 />
               </Form.Group>
 
@@ -178,10 +167,10 @@ export default function CadastroCamisa(): JSX.Element {
                     ? (
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Spinner as="span" size="sm" animation="border" role="status" />
-                        {'  Cadastrando...'}
+                        {'  Editando...'}
                       </div>
                     )
-                    : 'Cadastrar Camisa'}
+                    : 'Editar Camisa'}
                 </Button>
               </div>
             </div>
