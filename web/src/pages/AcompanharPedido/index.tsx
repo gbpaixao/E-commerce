@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Col, Image, Button,
 } from 'react-bootstrap';
@@ -12,6 +13,65 @@ import { useCarrinho } from '../../contexts/CarrinhoContext';
 import { formatCurrency } from '../../utils/utils';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
 import { styles } from './styles';
+
+function MudaCinzaLoja(
+  values: number,
+) {
+  if (values === 1) {
+    return styles.radioDiv2;
+  }
+  return styles.radioDiv;
+}
+function MudaCinzaCorreios(
+  values: number,
+) {
+  if (values === 2) {
+    return styles.radioDiv2;
+  }
+  return styles.radioDiv;
+}
+function MudaCinzaEntregue(
+  values: number,
+) {
+  if (values === 3) {
+    return styles.radioDiv2;
+  }
+  return styles.radioDiv;
+}
+function IconLoja(
+  values: number,
+) {
+  if (values === 1) {
+    return 'white';
+  }
+  return 'rgba(73, 80, 87, 1)';
+}
+
+function IconCorreios(
+  values: number,
+) {
+  if (values === 2) {
+    return 'white';
+  }
+  return 'rgba(73, 80, 87, 1)';
+}
+
+function IconEntregue(
+  values: number,
+) {
+  if (values === 3) {
+    return 'white';
+  }
+  return 'rgba(73, 80, 87, 1)';
+}
+
+const today = new Date();
+const dd = String(today.getDate()).padStart(2, '0');
+const mm = String(today.getMonth() + 1).padStart(2, '0');
+const yyyy = today.getFullYear();
+
+const hoje = `${dd}/${mm}/${yyyy}`;
+const entrega = new Date(yyyy, Number(mm), Number(dd));
 
 export function AcompanharPedido(): JSX.Element {
   return (
@@ -32,7 +92,9 @@ export function AcompanharPedido(): JSX.Element {
           </Col>
           <Col style={{ minWidth: '15rem' }}>
             <p>Previsão de entrega</p>
-            <b>29/08/2021</b>
+            <b>
+              {entrega.setDate(entrega.getDate() + 1)}
+            </b>
           </Col>
           <Col>
             <p>Total</p>
@@ -56,8 +118,8 @@ export function AcompanharPedido(): JSX.Element {
         <div className={styles.divRadios}>
 
           <div>
-            <div className={styles.radioDiv}>
-              <RiStore3Fill color="#5227CC" size={30} />
+            <div className={MudaCinzaLoja(1)}>
+              <RiStore3Fill color={IconLoja(1)} size={30} />
             </div>
             <div
               style={{
@@ -76,8 +138,8 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div className={styles.radioDiv}>
-              <MdLocalShipping color="#5227CC" size={30} />
+            <div className={MudaCinzaCorreios(1)}>
+              <MdLocalShipping color={IconCorreios(1)} size={30} />
             </div>
             <div
               style={{
@@ -96,8 +158,8 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div className={styles.radioDiv}>
-              <ImHome color="#5227CC" size={30} />
+            <div className={MudaCinzaEntregue(1)}>
+              <ImHome color={IconEntregue(1)} size={30} />
             </div>
             <div
               style={{
@@ -170,7 +232,7 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Data de compra </h5>
-              <p>HFAAF</p>
+              <p>{hoje}</p>
             </div>
 
             <div

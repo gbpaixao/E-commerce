@@ -28,6 +28,22 @@ export const styles = {
     justify-content: center;
     display: flex;
     `,
+  radioDiv2: css`
+    width: 85px;
+    height: 85px;
+    background: #5227CC;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    `,
+  itemAzul: css`
+    background: #5227CC;
+    `,
+  itemBranco: css`
+    background: white;
+    `,
+
   divRadios: css`
     margin-top: 20px;
     margin-left: 50px;
