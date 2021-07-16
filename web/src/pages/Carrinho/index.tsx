@@ -12,10 +12,12 @@ import { formatCurrency } from '../../utils/utils';
 import { styles } from './styles';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
 import api from '../../services/api';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 export function Carrinho(): JSX.Element {
   const { carrinho, removeItem, updateItemAmount } = useCarrinho();
   const stripe = useStripe();
+  const { usuario } = useUsuario();
 
   async function finalizarPedido() {
     if (!stripe) return;
@@ -33,8 +35,8 @@ export function Carrinho(): JSX.Element {
         priceData: {
           unit_amount: unitAmount * 100,
           product_data: {
-            name: 'test',
-            description: 'pedido de test',
+            name: `${usuario.nome} ${usuario.sobrenome}`,
+            description: `pedido de ${usuario.nome} ${usuario.sobrenome}`,
           },
         },
       });
