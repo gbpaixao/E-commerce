@@ -8,7 +8,7 @@ import { RiStore3Fill } from 'react-icons/ri';
 import { MdLocalShipping } from 'react-icons/md';
 
 import bsCustomFileInput from 'bs-custom-file-input';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { FormEvent, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
@@ -21,6 +21,7 @@ import { styles } from './styles';
 import { Pedido } from '../../types/PedidoMetadados';
 import { usePedido } from '../../contexts/PedidoContext';
 import api from '../../services/api';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 function MudaCinzaLoja(
   values: string,
@@ -78,19 +79,16 @@ export function AcompanharPedido(): JSX.Element {
 
   const { pedido, setPedido } = usePedido();
 
-  const dd = pedido.previsaoEntrega.substr(8, 2);
-  const mm = pedido.previsaoEntrega.substr(5, 2);
-  const yyyy = pedido.previsaoEntrega.substr(0, 4);
-  const entrega = `${dd}/${mm}/${yyyy}`;
-
-  const dd1 = pedido.dataCompra.substr(8, 2);
-  const mm1 = pedido.dataCompra.substr(5, 2);
-  const yyyy1 = pedido.dataCompra.substr(0, 4);
-  const compra = `${dd1}/${mm1}/${yyyy1}`;
+  const entrega = new Date(pedido.previsaoEntrega);
+  const compra = new Date(pedido.previsaoEntrega);
 
   const history = useHistory();
-  const clienteId = 1;
-  const pedidoId = 1;
+
+  const { usuario } = useUsuario();
+  const clienteId = usuario.idUsuario;
+  const { pedidoId } = useParams<{pedidoId?: string}>();
+  console.log('pedidoId', pedidoId);
+  // const pedidoId = 15;
 
   useEffect(() => {
     async function getPedido() {
@@ -100,6 +98,11 @@ export function AcompanharPedido(): JSX.Element {
     }
     getPedido();
   }, []);
+
+  const handleCancelar = async () => {
+    const response = await api.delete(`/pedidos/${clienteId}/${pedidoId}`);
+  };
+
   return (
     <Layout>
 
@@ -120,7 +123,7 @@ export function AcompanharPedido(): JSX.Element {
           <Col style={{ minWidth: '12rem' }}>
             <p>Previsão de entrega</p>
             <b>
-              {entrega}
+              {Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
             </b>
           </Col>
           <Col style={{ minWidth: '8rem' }}>
@@ -140,6 +143,7 @@ export function AcompanharPedido(): JSX.Element {
             <Button
               variant="light"
               size="sm"
+              onClick={handleCancelar}
             >
               Cancelar pedido
             </Button>
@@ -318,7 +322,9 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Data de compra </h5>
-              <p>{compra}</p>
+              <p>
+                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(compra)}
+              </p>
             </div>
 
             <div
@@ -328,7 +334,10 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Previsão de entrega </h5>
-              <p>{entrega}</p>
+              <p>
+                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
+
+              </p>
             </div>
           </div>
 

@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
-  Col, Image, Button,
+  Col, Image, Button, Alert,
 } from 'react-bootstrap';
 
 import bsCustomFileInput from 'bs-custom-file-input';
@@ -20,18 +22,10 @@ import { usePedido } from '../../contexts/PedidoContext';
 import api from '../../services/api';
 import { useUsuario } from '../../contexts/UsuarioContext';
 
-const today = new Date();
-const dd = String(today.getDate()).padStart(2, '0');
-const mm = String(today.getMonth() + 1).padStart(2, '0');
-const yyyy = today.getFullYear();
-
-const hoje = `${dd}/${mm}/${yyyy}`;
-const entrega = new Date(yyyy, Number(mm), Number(dd));
-
 export function Usuario(): JSX.Element {
   bsCustomFileInput.init();
   const { usuario, setUsuario } = useUsuario();
-  const { pedido, setPedido } = usePedido();
+  const { pedidoMeta, setPedidoMeta } = usePedido();
 
   const history = useHistory();
 
@@ -41,10 +35,24 @@ export function Usuario(): JSX.Element {
     async function getPedido() {
       const response = await api.get(`/pedidos/${clienteId}`, undefined, false);
       console.log(response);
-      setPedido(response.data);
+      setPedidoMeta(response.data);
     }
     getPedido();
   }, []);
+
+  const formatData = (dataEntrega: string) => {
+    const entrega = new Date(dataEntrega);
+    return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega);
+  };
+
+  const handleAcompanhar = async (idAcompanhar: string) => {
+    const response = await api.get(`/pedidos/${clienteId}/${idAcompanhar}`);
+    history.push(`/acompanharPedido/${idAcompanhar}`);
+  };
+
+  const handleCancelar = async (idCancel: string) => {
+    const response = await api.delete(`/pedidos/${clienteId}/${idCancel}`);
+  };
   return (
     <Layout>
 
@@ -76,72 +84,95 @@ export function Usuario(): JSX.Element {
             marginLeft: '17rem',
           }}
           >
-            <Button
+            {/* {  <Button
               variant="outline-dark"
               size="sm"
             >
               Alterar
-            </Button>
+            </Button>} */}
           </Col>
         </div>
 
         <div>
-          <b style={{ marginLeft: '1.2rem' }}>Meus pedidos (1)</b>
-          <div className={styles.divCancel}>
-            <Image
-              src={getRandomTshirt()}
-              height={140}
-              width={104}
-              thumbnail
-              style={{ marginLeft: '70px', marginTop: '0.5rem', marginBottom: '0.5rem' }}
-            />
-            <Col style={{ minWidth: '7rem' }}>
-              <p>N°</p>
-              <b>{pedido.idPedido}</b>
+          <b style={{ marginLeft: '1.2rem' }}>
+            Meus pedidos (
+            {pedidoMeta.length}
+            )
+          </b>
 
-            </Col>
-            <Col style={{ minWidth: '12rem' }}>
-              <p>Previsão de entrega</p>
-              <b>
-                {entrega.setDate(entrega.getDate() + 1)}
-              </b>
-            </Col>
-            <Col>
-              <p>Total</p>
-              <b>R$100,00</b>
-            </Col>
-            <Col style={{
-              minWidth: '15rem',
-            }}
-            >
-              <Button
-                style={{
-                  minWidth: '10rem',
-                  marginBottom: '0.7rem',
-                }}
-                variant="primary"
-                size="sm"
-              >
-                Acompanhar Pedido
-              </Button>
-              <Button
-                style={{
-                  minWidth: '10rem',
-                }}
-                variant="outline-dark"
-                size="sm"
-              >
-                Cancelar pedido
-              </Button>
-            </Col>
-          </div>
+          {pedidoMeta.length ? (
+            <div>
+
+              {pedidoMeta?.map((item, index) => (
+
+                <div key={index} className={styles.divCancel}>
+                  <Image
+                    src={getRandomTshirt()}
+                    height={140}
+                    width={104}
+                    thumbnail
+                    style={{ marginLeft: '70px', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+                  />
+                  <Col style={{ minWidth: '7rem' }}>
+                    <p>N°</p>
+                    <b>
+                      {item.idPedido}
+
+                      {console.log(item, 'item')}
+
+                    </b>
+
+                  </Col>
+                  <Col style={{ minWidth: '12rem' }}>
+                    <p>Previsão de entrega</p>
+                    <b>
+                      {formatData(item.previsaoEntrega)}
+                    </b>
+                  </Col>
+                  <Col>
+                    <p>Total</p>
+                    <b>{item.valor}</b>
+                  </Col>
+                  <Col style={{
+                    minWidth: '15rem',
+                  }}
+                  >
+                    <Button
+                      style={{
+                        minWidth: '10rem',
+                        marginBottom: '0.7rem',
+                      }}
+                      variant="primary"
+                      size="sm"
+                      onClick={() => handleAcompanhar(item.idPedido)}
+
+                    >
+                      Acompanhar Pedido
+                    </Button>
+                    <Button
+                      style={{
+                        minWidth: '10rem',
+                      }}
+                      variant="outline-dark"
+                      size="sm"
+                      onClick={() => handleCancelar(item.idPedido)}
+
+                    >
+                      Cancelar pedido
+                    </Button>
+                  </Col>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Alert variant="secondary">
+              Você ainda não realizou nenhum pedido
+            </Alert>
+          )}
         </div>
 
       </div>
     </Layout>
 
   );
-}
-function setSubmitting(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

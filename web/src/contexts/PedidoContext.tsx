@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Pedido } from '../types/PedidoMetadados';
+import { Pedido, PedidoMetadados } from '../types/PedidoMetadados';
 
 interface ContextChildrenProps {
   children: React.ReactNode
@@ -7,7 +7,9 @@ interface ContextChildrenProps {
 
 interface PedidoContext {
   pedido: Pedido;
-  setPedido: (pedido: Pedido) => void
+  pedidoMeta: PedidoMetadados[];
+  setPedido: (pedido: Pedido) => void,
+  setPedidoMeta: (pedido: PedidoMetadados[]) => void,
 }
 
 const PedidoContext = createContext<PedidoContext>({} as PedidoContext);
@@ -30,15 +32,29 @@ export function PedidoContextProvider({ children }: ContextChildrenProps): JSX.E
     return PedidoInitialState;
   });
 
+  const [pedidoMeta, setPedidoMetaContext] = useState<PedidoMetadados[]>(() => {
+    const pedidoMeta_aux = localStorage.getItem('pedidoMeta');
+    if (pedidoMeta_aux) return JSON.parse(pedidoMeta_aux);
+
+    return [];
+  });
+
   /* Persist */
   function setPedido(newPedido: Pedido) {
     setPedidoContext(newPedido);
-    localStorage.setItem('Pedido', JSON.stringify(newPedido));
+    localStorage.setItem('pedido', JSON.stringify(newPedido));
+  }
+  function setPedidoMeta(newPedido: PedidoMetadados[]) {
+    setPedidoMetaContext(newPedido);
+    localStorage.setItem('pedidoMeta', JSON.stringify(newPedido));
   }
 
   /* Provider */
   return (
-    <PedidoContext.Provider value={{ pedido, setPedido }}>
+    <PedidoContext.Provider value={{
+      pedido, pedidoMeta, setPedido, setPedidoMeta,
+    }}
+    >
       {children}
     </PedidoContext.Provider>
   );
