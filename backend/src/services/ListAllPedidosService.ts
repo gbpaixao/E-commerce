@@ -19,7 +19,8 @@ class ListAllPedidosService {
         'Entrega.status' //loja, correios, entregue)
       )
       .from('Pedido')
-      .where({ Cliente_idCliente: clienteId });
+      .where({ Cliente_idCliente: clienteId })
+      .andWhere('Pedido.status', '<>', 'cancelado');
 
     return pedidos;
   }

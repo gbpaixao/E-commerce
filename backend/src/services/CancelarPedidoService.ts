@@ -5,7 +5,7 @@ class CancelarPedidoService {
     await database
       .update({ status: 'cancelado' })
       .from('Pedido')
-      .where({ idPedido: pedidoId, Cliente_idCliente: clienteId });
+      .where({ idPedido: pedidoId });
 
     return true;
   }
