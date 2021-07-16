@@ -21,7 +21,6 @@ import { toast } from 'react-toastify';
 
 export default function CadastroUsuario(): JSX.Element {
   bsCustomFileInput.init();
-
   const { usuario, setUsuario } = useUsuario();
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
@@ -43,7 +42,8 @@ export default function CadastroUsuario(): JSX.Element {
         password: usuario.senha,
       });
 
-      const { token } = auth.data;
+      const { token, user } = auth.data;
+      setUsuario(user);
       localStorage.setItem('authToken', String(token));
       history.push('/home');
       /* Adicionar à contextAPI */

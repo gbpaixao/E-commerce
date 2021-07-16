@@ -48,9 +48,6 @@ export function Login(): JSX.Element {
       });
 
       const { token, user } = response.data;
-      console.log('token', token);
-      console.log('user', user);
-      console.log('response', response.data);
       setUsuario(user);
       localStorage.setItem('authToken', String(token));
 

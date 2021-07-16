@@ -20,6 +20,14 @@ export const UsuarioInitialState: Usuario = {
   sobrenome: '',
   telefone: '',
   email: '',
+  rua: '',
+  bairro: '',
+  numero: '',
+  cep: '',
+  complemento: '',
+  cidade: '',
+  estado: '',
+  pais: '',
 };
 
 export function UsuarioContextProvider({ children }: ContextChildrenProps):JSX.Element {

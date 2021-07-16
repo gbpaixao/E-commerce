@@ -1,4 +1,6 @@
-export interface Usuario {
+import { Endereco } from './Endereco';
+
+export interface Usuario extends Endereco{
   idUsuario?: number;
   cpf: string;
   senha: string;
@@ -6,4 +8,7 @@ export interface Usuario {
   sobrenome: string;
   telefone: string;
   email: string;
+  // rua: string;
+  // numero: string;
+  // bairro: string;
 }
