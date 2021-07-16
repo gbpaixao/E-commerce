@@ -16,11 +16,7 @@ class ListAllPedidosService {
         'idPedido',
         'dataCompra',
         'Pedido.valorTotal as valor',
-        // 'Pedido.status', // ativo, finalizado e o outro que eu esqueci
-        'Camisa.nome as nomeCamisa',
-        'previsaoEntrega',
-        'Entrega.status', //loja, correios, entregue)
-        'codigoRastreio'
+        'Entrega.status' //loja, correios, entregue)
       )
       .from('Pedido')
       .where({ Cliente_idCliente: clienteId });

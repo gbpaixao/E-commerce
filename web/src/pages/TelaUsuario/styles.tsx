@@ -5,21 +5,23 @@ export const styles = {
   divCancel: css`
     margin-left: 20px;
     margin-right: 20px;
-    background: rgba(222, 226, 230, 1);
     border-radius: 10px;
+    margin-top: 5px;
+    border: 1px solid rgba(222, 226, 230, 1);
     justify-content: center;
     align-items: center;
     display: flex;
       `,
 
   divUser: css`
-      margin-left: 20px;
-      margin-right: 20px;
-      border-radius: 10px;
-      border: 2px solid red;
-      justify-content: center;
-      align-items: center;
-      display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+  background: rgba(222, 226, 230, 1);
+  margin-bottom: 35px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
         `,
   radioDiv: css`
     width: 85px;

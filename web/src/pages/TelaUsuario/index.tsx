@@ -3,13 +3,10 @@
 import {
   Col, Image, Button,
 } from 'react-bootstrap';
-import { ImHome } from 'react-icons/im';
-import { RiStore3Fill } from 'react-icons/ri';
-import { MdLocalShipping } from 'react-icons/md';
 
 import bsCustomFileInput from 'bs-custom-file-input';
 import { useHistory } from 'react-router-dom';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
 import ItemsAmount from '../../components/ItemsAmount';
@@ -37,30 +34,21 @@ export function Usuario(): JSX.Element {
 
   const history = useHistory();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const clienteId = 1;
 
-    const clienteId = 1;
-    const pedidoId = 1;
-
-    setSubmitting(true);
-    try {
-      const response = await api.get(`/pedidos/${clienteId}/${pedidoId}`, undefined, false);
-
-      setPedido(response.data.pedido);
-      history.push('/home');
-      /* Adicionar à contextAPI */
-    } catch (error) {
-      console.error(error);
-      toast.error('Houve algum problema!');
+  useEffect(() => {
+    async function getPedido() {
+      const response = await api.get(`/pedidos/${clienteId}`, undefined, false);
+      console.log(response);
+      setPedido(response.data);
     }
-    setSubmitting(false);
-  };
+    getPedido();
+  }, []);
   return (
     <Layout>
 
       <div>
-        <div className={styles.divCancel}>
+        <div className={styles.divUser}>
           <Image
             src={getRandomTshirt()}
             height={50}
@@ -73,59 +61,77 @@ export function Usuario(): JSX.Element {
           <Col style={{ minWidth: '150px' }}>
             <p>Willians Augusto</p>
             <b>1215</b>
+            <br />
+            <b>1215</b>
+            <br />
+            <b>1215</b>
           </Col>
 
           <Col style={{
             minWidth: '10rem',
-            marginRight: '20px',
-            marginLeft: '2rem',
+            marginRight: '0px',
+            marginLeft: '17rem',
           }}
           >
             <Button
-              variant="light"
+              variant="outline-dark"
               size="sm"
             >
-              Cancelar pedido
+              Alterar
             </Button>
           </Col>
         </div>
 
-        <div className={styles.divCancel}>
-          <Image
-            src={getRandomTshirt()}
-            height={140}
-            width={104}
-            thumbnail
-            style={{ marginLeft: '50px', marginTop: '0.5rem', marginBottom: '0.5rem' }}
-          />
-          <Col>
-            <p>N°</p>
-            <b>1215</b>
+        <div>
+          <b style={{ marginLeft: '1.2rem' }}>Meus pedidos (1)</b>
+          <div className={styles.divCancel}>
+            <Image
+              src={getRandomTshirt()}
+              height={140}
+              width={104}
+              thumbnail
+              style={{ marginLeft: '70px', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+            />
+            <Col style={{ minWidth: '7rem' }}>
+              <p>N°</p>
+              <b>{pedido.idPedido}</b>
 
-          </Col>
-          <Col style={{ minWidth: '15rem' }}>
-            <p>Previsão de entrega</p>
-            <b>
-              {entrega.setDate(entrega.getDate() + 1)}
-            </b>
-          </Col>
-          <Col>
-            <p>Total</p>
-            <b>R$100,00</b>
-          </Col>
-          <Col style={{
-            minWidth: '10rem',
-            marginRight: '20px',
-            marginLeft: '2rem',
-          }}
-          >
-            <Button
-              variant="light"
-              size="sm"
+            </Col>
+            <Col style={{ minWidth: '12rem' }}>
+              <p>Previsão de entrega</p>
+              <b>
+                {entrega.setDate(entrega.getDate() + 1)}
+              </b>
+            </Col>
+            <Col>
+              <p>Total</p>
+              <b>R$100,00</b>
+            </Col>
+            <Col style={{
+              minWidth: '15rem',
+            }}
             >
-              Cancelar pedido
-            </Button>
-          </Col>
+              <Button
+                style={{
+                  minWidth: '10rem',
+                  marginBottom: '0.7rem',
+                }}
+                variant="primary"
+                size="sm"
+              >
+                Acompanhar Pedido
+              </Button>
+              <Button
+                style={{
+                  minWidth: '10rem',
+                }}
+                variant="outline-dark"
+                size="sm"
+              >
+                Cancelar pedido
+              </Button>
+            </Col>
+          </div>
         </div>
 
       </div>

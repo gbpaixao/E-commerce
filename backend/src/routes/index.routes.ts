@@ -16,6 +16,6 @@ routes.post('/auth', authenticateController.handle)
 routes.use(ensureAuthenticated)
 routes.use(loginRoutes)
 routes.use(camisaRoutes)
-routes.use('/pedido',pedidoRoutes)
+routes.use(pedidoRoutes)
 
 export default routes

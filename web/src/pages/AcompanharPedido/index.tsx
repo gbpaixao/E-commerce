@@ -9,7 +9,7 @@ import { MdLocalShipping } from 'react-icons/md';
 
 import bsCustomFileInput from 'bs-custom-file-input';
 import { useHistory } from 'react-router-dom';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
 import ItemsAmount from '../../components/ItemsAmount';
@@ -23,90 +23,83 @@ import { usePedido } from '../../contexts/PedidoContext';
 import api from '../../services/api';
 
 function MudaCinzaLoja(
-  values: number,
+  values: string,
 ) {
-  if (values === 1) {
+  if (values === 'loja') {
     return styles.radioDiv2;
   }
   return styles.radioDiv;
 }
 function MudaCinzaCorreios(
-  values: number,
+  values: string,
 ) {
-  if (values === 2) {
+  if (values === 'correios') {
     return styles.radioDiv2;
   }
   return styles.radioDiv;
 }
 function MudaCinzaEntregue(
-  values: number,
+  values: string,
 ) {
-  if (values === 3) {
+  if (values === 'entregue') {
     return styles.radioDiv2;
   }
   return styles.radioDiv;
 }
 function IconLoja(
-  values: number,
+  values: string,
 ) {
-  if (values === 1) {
+  if (values === 'loja') {
     return 'white';
   }
   return 'rgba(73, 80, 87, 1)';
 }
 
 function IconCorreios(
-  values: number,
+  values: string,
 ) {
-  if (values === 2) {
+  if (values === 'correios') {
     return 'white';
   }
   return 'rgba(73, 80, 87, 1)';
 }
 
 function IconEntregue(
-  values: number,
+  values: string,
 ) {
-  if (values === 3) {
+  if (values === 'entregue') {
     return 'white';
   }
   return 'rgba(73, 80, 87, 1)';
 }
-
-const today = new Date();
-const dd = String(today.getDate()).padStart(2, '0');
-const mm = String(today.getMonth() + 1).padStart(2, '0');
-const yyyy = today.getFullYear();
-
-const hoje = `${dd}/${mm}/${yyyy}`;
-const entrega = new Date(yyyy, Number(mm), Number(dd));
 
 export function AcompanharPedido(): JSX.Element {
   bsCustomFileInput.init();
 
   const { pedido, setPedido } = usePedido();
 
+  const dd = pedido.previsaoEntrega.substr(8, 2);
+  const mm = pedido.previsaoEntrega.substr(5, 2);
+  const yyyy = pedido.previsaoEntrega.substr(0, 4);
+  const entrega = `${dd}/${mm}/${yyyy}`;
+
+  const dd1 = pedido.dataCompra.substr(8, 2);
+  const mm1 = pedido.dataCompra.substr(5, 2);
+  const yyyy1 = pedido.dataCompra.substr(0, 4);
+  const compra = `${dd1}/${mm1}/${yyyy1}`;
+
   const history = useHistory();
+  const clienteId = 1;
+  const pedidoId = 1;
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    const clienteId = 1;
-    const pedidoId = 1;
-
-    setSubmitting(true);
-    try {
-      const response = await api.get(`/pedidos/${clienteId}/${pedidoId}`, undefined, false);
-
-      setPedido(response.data.pedido);
-      history.push('/home');
-      /* Adicionar à contextAPI */
-    } catch (error) {
-      console.error(error);
-      toast.error('Houve algum problema!');
+  useEffect(() => {
+    async function getPedido() {
+      const response = await api.get(`/pedidos/${clienteId}/${pedidoId}`);
+      console.log(response);
+      setPedido(response.data);
     }
-    setSubmitting(false);
-  };
+    getPedido();
+  }, []);
   return (
     <Layout>
 
@@ -121,18 +114,22 @@ export function AcompanharPedido(): JSX.Element {
           />
           <Col>
             <p>N°</p>
-            <b>1215</b>
+            <b>{pedido.idPedido}</b>
 
           </Col>
-          <Col style={{ minWidth: '15rem' }}>
+          <Col style={{ minWidth: '12rem' }}>
             <p>Previsão de entrega</p>
             <b>
-              {entrega.setDate(entrega.getDate() + 1)}
+              {entrega}
             </b>
           </Col>
-          <Col>
+          <Col style={{ minWidth: '8rem' }}>
             <p>Total</p>
-            <b>R$100,00</b>
+            <b>
+              R$
+              {'\n'}
+              {pedido.valor}
+            </b>
           </Col>
           <Col style={{
             minWidth: '10rem',
@@ -152,8 +149,8 @@ export function AcompanharPedido(): JSX.Element {
         <div className={styles.divRadios}>
 
           <div>
-            <div className={MudaCinzaLoja(1)}>
-              <RiStore3Fill color={IconLoja(1)} size={30} />
+            <div className={MudaCinzaLoja(pedido.status)}>
+              <RiStore3Fill color={IconLoja(pedido.status)} size={30} />
             </div>
             <div
               style={{
@@ -172,8 +169,8 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div className={MudaCinzaCorreios(1)}>
-              <MdLocalShipping color={IconCorreios(1)} size={30} />
+            <div className={MudaCinzaCorreios(pedido.status)}>
+              <MdLocalShipping color={IconCorreios(pedido.status)} size={30} />
             </div>
             <div
               style={{
@@ -192,8 +189,8 @@ export function AcompanharPedido(): JSX.Element {
           />
 
           <div>
-            <div className={MudaCinzaEntregue(1)}>
-              <ImHome color={IconEntregue(1)} size={30} />
+            <div className={MudaCinzaEntregue(pedido.status)}>
+              <ImHome color={IconEntregue(pedido.status)} size={30} />
             </div>
             <div
               style={{
@@ -213,31 +210,86 @@ export function AcompanharPedido(): JSX.Element {
 
           <div
             style={{
-              alignItems: 'space-between',
-              justifyContent: 'space-between',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
               display: 'flex',
             }}
           >
             <div
               style={{
-                marginLeft: '1rem',
-                width: '3rem',
+                marginLeft: '0rem',
+                width: '8rem',
               }}
             >
-              <p>Atualização</p>
-              <p>Atualização</p>
-              <p>Atualização</p>
-              <p>Atualização massas</p>
+              {pedido.status === 'loja' && (
+              <p>
+                  {compra }
+                  {'\n'}
+                23:59
+
+              </p>
+              )}
+              {pedido.status === 'correios'
+              && (
+              <p>
+                  {compra}
+                  {'\n'}
+                23:59
+                {' '}
+                <br />
+                29/07/2021 22:50
+              </p>
+              )}
+              {pedido.status === 'entregue'
+               && (
+               <p>
+                 {compra}
+                 {'\n'}
+                 23:59
+                 {' '}
+                 <br />
+                 29/07/2021 22:50
+
+                 <br />
+                 30/08/2021 15:32
+               </p>
+               )}
 
             </div>
 
+            <div style={{
+              height: '200px',
+              borderRight: '1px solid rgba(222, 226, 230, 1) ',
+            }}
+            />
+
             <div
               style={{
-                marginLeft: '5rem',
-                width: '2rem',
+                marginLeft: '5px',
+                width: '15rem',
               }}
             >
-              <p>Status</p>
+              {pedido.status === 'loja' && <p>compra aprovada</p>}
+              {pedido.status === 'correios'
+              && (
+              <p>
+                compra aprovada
+                {' '}
+                <br />
+                pedido com os correios
+              </p>
+              )}
+              {pedido.status === 'entregue'
+              && (
+              <p>
+                compra aprovada
+                {' '}
+                <br />
+                pedido nos correios
+                <br />
+                pedido entregue
+              </p>
+              )}
             </div>
 
           </div>
@@ -256,7 +308,7 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Código de rastreio</h5>
-              <p>HFAAF</p>
+              <p>{pedido.codigoRastreio}</p>
             </div>
 
             <div
@@ -266,7 +318,7 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Data de compra </h5>
-              <p>{hoje}</p>
+              <p>{compra}</p>
             </div>
 
             <div
@@ -276,7 +328,7 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Previsão de entrega </h5>
-              <p>HFAAF</p>
+              <p>{entrega}</p>
             </div>
           </div>
 
