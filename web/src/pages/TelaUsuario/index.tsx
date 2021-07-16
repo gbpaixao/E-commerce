@@ -31,7 +31,7 @@ const entrega = new Date(yyyy, Number(mm), Number(dd));
 export function Usuario(): JSX.Element {
   bsCustomFileInput.init();
   const { usuario, setUsuario } = useUsuario();
-  const { pedido, setPedido } = usePedido();
+  const { pedidoMeta, setPedidoMeta } = usePedido();
 
   const history = useHistory();
 
@@ -41,7 +41,7 @@ export function Usuario(): JSX.Element {
     async function getPedido() {
       const response = await api.get(`/pedidos/${clienteId}`, undefined, false);
       console.log(response);
-      setPedido(response.data);
+      setPedidoMeta(response.data);
     }
     getPedido();
   }, []);
@@ -97,7 +97,7 @@ export function Usuario(): JSX.Element {
             />
             <Col style={{ minWidth: '7rem' }}>
               <p>N°</p>
-              <b>{pedido.idPedido}</b>
+              <b>{pedidoMeta[0].idPedido}</b>
 
             </Col>
             <Col style={{ minWidth: '12rem' }}>
@@ -137,11 +137,11 @@ export function Usuario(): JSX.Element {
           </div>
         </div>
 
+        {/* api.get(`/pedidos/${clienteId}/${pedido.idPedido}` */}
+        {/* history.push(`/acompanharPedido/${pedido.idPedido}`) */}
+        {pedidoMeta.map(((pedido) => <div>{pedido.idPedido}</div>))}
       </div>
     </Layout>
 
   );
-}
-function setSubmitting(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

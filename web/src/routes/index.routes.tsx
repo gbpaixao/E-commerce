@@ -26,7 +26,7 @@ const Routes = (): JSX.Element => (
               <Route exact path="/home" component={Home} />
               <Route exact path="/carrinho" component={Carrinho} />
               <Route exact path="/cadastro" component={CadastroUsuario} />
-              <Route exact path="/acompanharPedido" component={AcompanharPedido} />
+              <Route exact path="/acompanharPedido/:pedidoId" component={AcompanharPedido} />
               <Route exact path="/usuario" component={Usuario} />
 
               {camisaRoutes.map((entry) => (<Route {...entry} />))}
