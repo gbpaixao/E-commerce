@@ -27,6 +27,7 @@ class AuthenticateService {
         .join('Cliente', 'Cliente.Usuario_idUsuario', 'Usuario.idUsuario')
         .join('Endereco', 'Endereco.idEndereco', 'Cliente.Endereco_idEndereco')
         .select<UsuarioEndereco[]>(
+          'idUsuario',
           'cpf',
           'nome',
           'senha',
@@ -79,6 +80,7 @@ class AuthenticateService {
     return {
       token,
       user: {
+        idUsuario: user.idUsuario,
         email: user.email,
         cpf: user.cpf,
         nome: user.nome,

@@ -13,6 +13,7 @@ import { styles } from './styles';
 import { useCamisa } from '../../../contexts/CamisaContext';
 import { useCarrinho } from '../../../contexts/CarrinhoContext';
 import { getRandomTshirt } from '../../../server/getRandomTshirt';
+import { useUsuario } from '../../../contexts/UsuarioContext';
 
 export default function DescricaoCamisa(): JSX.Element {
   const { camisa, setCamisa } = useCamisa();
@@ -26,7 +27,9 @@ export default function DescricaoCamisa(): JSX.Element {
 
   const history = useHistory();
 
-  const admin = false;
+  const { usuario } = useUsuario();
+
+  const { admin } = usuario;
 
   /* Handle Submit */
   const handleSubmitCart = async () => {

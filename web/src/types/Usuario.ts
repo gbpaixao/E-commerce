@@ -1,6 +1,6 @@
 import { Endereco } from './Endereco';
 
-export interface Usuario extends Endereco{
+export interface Usuario extends Endereco {
   idUsuario?: number;
   cpf: string;
   senha: string;
@@ -8,6 +8,7 @@ export interface Usuario extends Endereco{
   sobrenome: string;
   telefone: string;
   email: string;
+  admin: boolean;
   // rua: string;
   // numero: string;
   // bairro: string;

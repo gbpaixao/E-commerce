@@ -14,6 +14,7 @@ const UsuarioContext = createContext<UsuarioContext>({} as UsuarioContext);
 
 export const UsuarioInitialState: Usuario = {
   idUsuario: 0,
+  admin: false,
   cpf: '',
   senha: '',
   nome: '',
