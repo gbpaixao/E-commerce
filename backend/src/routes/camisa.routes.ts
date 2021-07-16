@@ -23,4 +23,8 @@ routes.put('/camisas/:id', ensureAdmin, updateCamisaController.handle)
 
 routes.delete('/camisas/:id', ensureAdmin, deleteCamisaController.handle)
 
+routes.put('/camisas/:id', updateCamisaController.handle)
+
+routes.delete('/camisas/:id', deleteCamisaController.handle)
+
 export default routes

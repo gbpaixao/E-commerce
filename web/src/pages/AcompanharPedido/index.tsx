@@ -8,8 +8,9 @@ import { RiStore3Fill } from 'react-icons/ri';
 import { MdLocalShipping } from 'react-icons/md';
 
 import bsCustomFileInput from 'bs-custom-file-input';
-import { useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { FormEvent, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
 
 import { formatCurrency } from '../../utils/utils';
@@ -18,6 +19,7 @@ import { styles } from './styles';
 import { Pedido } from '../../types/PedidoMetadados';
 import { usePedido } from '../../contexts/PedidoContext';
 import api from '../../services/api';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 function MudaCinzaLoja(
   values: string,
@@ -86,8 +88,12 @@ export function AcompanharPedido(): JSX.Element {
   const compra = `${dd1}/${mm1}/${yyyy1}`;
 
   const history = useHistory();
-  const clienteId = 1;
-  const pedidoId = 1;
+
+  const { usuario } = useUsuario();
+  const clienteId = usuario.idUsuario;
+  const { pedidoId } = useParams<{pedidoId?: string}>();
+  console.log('pedidoId', pedidoId);
+  // const pedidoId = 15;
 
   useEffect(() => {
     async function getPedido() {
@@ -97,6 +103,11 @@ export function AcompanharPedido(): JSX.Element {
     }
     getPedido();
   }, []);
+
+  const handleCancelar = async () => {
+    const response = await api.delete(`/pedidos/${clienteId}/${pedidoId}`);
+  };
+
   return (
     <Layout>
 
@@ -137,6 +148,7 @@ export function AcompanharPedido(): JSX.Element {
             <Button
               variant="light"
               size="sm"
+              onClick={handleCancelar}
             >
               Cancelar pedido
             </Button>

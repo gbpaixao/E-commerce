@@ -18,6 +18,7 @@ import { styles } from './styles';
 import { Pedido } from '../../types/PedidoMetadados';
 import { usePedido } from '../../contexts/PedidoContext';
 import api from '../../services/api';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 const today = new Date();
 const dd = String(today.getDate()).padStart(2, '0');
@@ -29,8 +30,8 @@ const entrega = new Date(yyyy, Number(mm), Number(dd));
 
 export function Usuario(): JSX.Element {
   bsCustomFileInput.init();
-
-  const { pedido, setPedido } = usePedido();
+  const { usuario, setUsuario } = useUsuario();
+  const { pedidoMeta, setPedidoMeta } = usePedido();
 
   const history = useHistory();
 
@@ -40,7 +41,7 @@ export function Usuario(): JSX.Element {
     async function getPedido() {
       const response = await api.get(`/pedidos/${clienteId}`, undefined, false);
       console.log(response);
-      setPedido(response.data);
+      setPedidoMeta(response.data);
     }
     getPedido();
   }, []);
@@ -59,12 +60,14 @@ export function Usuario(): JSX.Element {
             }}
           />
           <Col style={{ minWidth: '150px' }}>
-            <p>Willians Augusto</p>
-            <b>1215</b>
-            <br />
-            <b>1215</b>
-            <br />
-            <b>1215</b>
+            <b>{usuario.nome}</b>
+            <p>{usuario.telefone}</p>
+            <p>{usuario.email}</p>
+            <p>
+              {`${usuario.rua},
+              ${usuario.numero}
+              `}
+            </p>
           </Col>
 
           <Col style={{
@@ -94,7 +97,7 @@ export function Usuario(): JSX.Element {
             />
             <Col style={{ minWidth: '7rem' }}>
               <p>N°</p>
-              <b>{pedido.idPedido}</b>
+              <b>{pedidoMeta[0].idPedido}</b>
 
             </Col>
             <Col style={{ minWidth: '12rem' }}>
@@ -134,11 +137,11 @@ export function Usuario(): JSX.Element {
           </div>
         </div>
 
+        {/* api.get(`/pedidos/${clienteId}/${pedido.idPedido}` */}
+        {/* history.push(`/acompanharPedido/${pedido.idPedido}`) */}
+        {pedidoMeta.map(((pedido) => <div>{pedido.idPedido}</div>))}
       </div>
     </Layout>
 
   );
-}
-function setSubmitting(arg0: boolean) {
-  throw new Error('Function not implemented.');
 }
