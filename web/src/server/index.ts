@@ -10,7 +10,7 @@ createServer({
     server.db.loadData({
       camisas: [
         {
-          idCamisa: 1,
+          id: 1,
           nomeCamisa: 'Camisa Básica',
           descricao: `Camisa Flamengo I 21/22 s/n° Torcedor Adidas Masculina - Vermelho+Preto.
               Alô, Nação Rubro-Negra! Chegou o novo manto do Mengão para a temporada 21/22.
@@ -43,7 +43,7 @@ createServer({
           },
         },
         {
-          idCamisa: 2,
+          id: 2,
           nomeCamisa: 'Camisa 2',
           descricao: 'Camisa 2',
           valor: 200,

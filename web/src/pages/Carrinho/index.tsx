@@ -15,7 +15,7 @@ import { getRandomTshirt } from '../../server/getRandomTshirt';
 export function Carrinho(): JSX.Element {
   const { carrinho, removeItem, updateItemAmount } = useCarrinho();
 
-  console.log(carrinho);
+  console.log('CARRINHO:', carrinho);
 
   return (
     <Layout>
@@ -27,7 +27,7 @@ export function Carrinho(): JSX.Element {
             <h3 style={{ marginLeft: '13.5rem' }}>SUBTOTAL</h3>
           </div>
           {carrinho.items?.map((item) => (
-            <div key={item.camisa.idCamisa} className="d-flex align-items-center">
+            <div key={item.camisa.id} className="d-flex align-items-center">
               <Image
                 src={getRandomTshirt()}
                 height={157}
@@ -44,7 +44,7 @@ export function Carrinho(): JSX.Element {
               <Col style={{ marginRight: '6rem' }}>
                 <ItemsAmount
                   setCounter={(quantidade: number) => (
-                    updateItemAmount(quantidade, item.camisa.idCamisa))}
+                    updateItemAmount(quantidade, item.camisa.id))}
                   counter={item.quantidade}
                 />
               </Col>
@@ -57,7 +57,7 @@ export function Carrinho(): JSX.Element {
                 <button
                   type="button"
                   className={styles.trashButton}
-                  onClick={() => removeItem(item.camisa.idCamisa)}
+                  onClick={() => removeItem(item.camisa.id)}
                 >
                   <FiTrash2 color="#5227CC" size={24} />
                 </button>

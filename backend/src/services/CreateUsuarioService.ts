@@ -14,8 +14,7 @@ class CreateUsuarioService {
       telefone: usuario.telefone,
       email: usuario.email,
 
-    };
-
+    }; 
     const usuarioDB = await database
       .clone()
       .insert(usuarioInsert, [

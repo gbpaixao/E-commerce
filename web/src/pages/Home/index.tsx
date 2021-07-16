@@ -16,7 +16,7 @@ export function Home(): JSX.Element {
   useEffect(() => {
     async function getCamisas() {
       const response = await api.get('/camisas', undefined, false);
-
+      console.log(response.data);
       if (response) {
         setCamisas(response.data);
       }
@@ -36,7 +36,7 @@ export function Home(): JSX.Element {
           <p className="mb-0">Cadastrar camisa</p>
           <p>+</p>
         </button>
-        {camisas.map((camisa) => <CardCamisa key={camisa.idCamisa} camisa={camisa} />)}
+        {camisas.map((camisa) => <CardCamisa key={camisa.id} camisa={camisa} />)}
       </div>
     </Layout>
   );
