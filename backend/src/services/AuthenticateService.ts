@@ -8,6 +8,7 @@ interface IAuthenticateRequest {
 }
 
 interface UsuarioEndereco extends Usuario {
+  idUsuario: string;
   rua: string;
   bairro: string;
   numero: string;
@@ -46,12 +47,14 @@ class AuthenticateService {
     )[0];
 
     if (!user) {
+      console.log('merda');
       throw new Error('Invalid email/password');
     }
 
     const passwordMatch = password === user.senha;
 
     if (!passwordMatch) {
+      console.log('2merda');
       throw new Error('Invalid email/password');
     }
 
