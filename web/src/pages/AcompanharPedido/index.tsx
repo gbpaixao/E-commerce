@@ -9,11 +9,8 @@ import { MdLocalShipping } from 'react-icons/md';
 
 import bsCustomFileInput from 'bs-custom-file-input';
 import { useHistory } from 'react-router-dom';
-import { FormEvent, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 import { Layout } from '../../components/Layout';
-import ItemsAmount from '../../components/ItemsAmount';
-import { useCarrinho } from '../../contexts/CarrinhoContext';
 
 import { formatCurrency } from '../../utils/utils';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
