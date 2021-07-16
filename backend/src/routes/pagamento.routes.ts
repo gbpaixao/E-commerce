@@ -2,6 +2,10 @@ import Stripe from 'stripe';
 import dotenv from 'dotenv';
 import { Router } from 'express';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
+import { CreateItemPedidoService } from '../services/CreateItemPedidoService';
+import { CreatePedidoService } from '../services/CreatePedidoService';
+import { CreateCarrinhoService } from '../services/CreateCarrinhoService';
+import { CreatePagamentoService } from '../services/CreatePagamentoService';
 
 dotenv.config();
 
@@ -19,14 +23,13 @@ routes.get('/public-key', (req, res) => {
 });
 
 routes.post('/checkout', ensureAuthenticated, async (req, res) => {
-  const priceData = req.body;
+  const {carrinho, idCliente, priceData} = req.body;
   
-  // TODO:
-  // passar os dados do carrinho pelo body da requisição
-  // ao receber, diminuir a quantidade de cada item em seus respectivos estoques
-  // criar um registro na tabela Pedido
-  // criar um registro na tabela Entrega
-  
+  const createPedidoService = new CreatePedidoService();
+  const createCarrinhoService = new CreateCarrinhoService();
+  const createItemPedidoService = new CreateItemPedidoService();
+  const createPagamentoService = new CreatePagamentoService();
+
   const stripeCheckoutSession = await stripe.checkout.sessions.create({
     payment_method_types: ["card", "boleto"],
     billing_address_collection: "required",
@@ -38,11 +41,39 @@ routes.post('/checkout', ensureAuthenticated, async (req, res) => {
       quantity: 1,
     }],
     mode: "payment",
-    // allow_promotion_codes: true,
     cancel_url: process.env.STRIPE_CANCEL_URL!,
     success_url: process.env.STRIPE_SUCCESS_URL!,
   });
 
+  const Pagamento_idPagamento = await createPagamentoService.execute({
+    idPagamento: stripeCheckoutSession.id,
+    pagamentoEfetuado: false
+  });
+
+  const Pedido_idPedido = await createPedidoService.execute({
+    status: 'Em processamento',
+    valorTotal: priceData.unit_amount / 100,
+    dataCompra: new Date(),
+    desconto: 0,
+    Cliente_idCliente: idCliente,
+    Pagamento_idPagamento,
+  });
+
+  const carrinhoId = await createCarrinhoService.execute({
+    Pedido_idPedido,
+  });
+
+  for (const item of carrinho) {
+    await createItemPedidoService.execute({
+      Camisa_idCamisa: item.camisa.id,
+      Carrinho_idCarrinho: carrinhoId,
+      nomeJogador: item.nomeJogador,
+      numeroJogador: item.numeroJogador,
+      quantidade: item.quantidade,
+      valorTotal: item.camisa.valor * item.quantidade
+    })
+  }
+  
   console.log('checkout session: ', stripeCheckoutSession.id);
   
   return res.status(200).json({ sessionId: stripeCheckoutSession.id });
