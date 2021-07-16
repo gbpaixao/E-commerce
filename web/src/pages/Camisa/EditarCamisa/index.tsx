@@ -27,11 +27,11 @@ export default function EditarCamisa(): JSX.Element {
     setSubmitting(true);
 
     try {
-      const response = await api.put(`/camisas/${camisa.idCamisa}`, {
+      const response = await api.put(`/camisas/${camisa.id}`, {
         camisa,
       }, undefined, true, 'Camisa alterada com sucesso!');
 
-      history.push(`/descricaoCamisa/${camisa.idCamisa}`);
+      history.push(`/descricaoCamisa/${camisa.id}`);
     } catch (error) {
       toast.error('Houve algum problema!');
     }

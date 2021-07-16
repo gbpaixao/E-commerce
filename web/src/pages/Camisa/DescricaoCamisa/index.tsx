@@ -26,13 +26,13 @@ export default function DescricaoCamisa(): JSX.Element {
 
   const history = useHistory();
 
-  const admin = true;
+  const admin = false;
 
   /* Handle Submit */
   const handleSubmitCart = async () => {
     try {
       setSubmitting(true);
-      addItem(camisa.idCamisa, itemCarrinho);
+      addItem(camisa.id, itemCarrinho);
 
       history.push('/carrinho');
     } catch (error) {
@@ -45,7 +45,7 @@ export default function DescricaoCamisa(): JSX.Element {
     try {
       setSubmitting(true);
 
-      history.push(`/editarCamisa/${camisa.idCamisa}`);
+      history.push(`/editarCamisa/${camisa.id}`);
     } catch (error) {
       toast.error('Houve algum problema!');
     }
@@ -56,7 +56,7 @@ export default function DescricaoCamisa(): JSX.Element {
     try {
       setSubmitting(true);
 
-      await api.delete(`/camisas/${camisa.idCamisa}`);
+      await api.delete(`/camisas/${camisa.id}`);
 
       history.push('/home');
     } catch (error) {

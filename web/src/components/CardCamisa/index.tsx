@@ -46,7 +46,7 @@ export function CardCamisa({ camisa }: CardCamisaProps): JSX.Element {
           >
             <Button
               type="button"
-              onClick={() => handleClick(camisa.idCamisa)}
+              onClick={() => handleClick(camisa.id)}
               style={{ background: '#5227CC', border: 0 }}
             >
               Ver mais

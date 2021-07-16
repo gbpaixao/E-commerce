@@ -38,7 +38,7 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
 
   async function addItem(itemId: string, itemCarrinho: ItemCarrinho) {
     const itemsCarrinho = [...carrinho.items];
-    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.idCamisa === itemId);
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
 
     const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
 
@@ -46,7 +46,8 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     const quantidade = quantidadeAtual + 1;
 
     if (quantidade > camisa.estoque) {
-      throw new Error('Quantidade solicitada fora de estoque');
+      // throw new Error('Quantidade solicitada fora de estoque');
+      return;
     }
 
     if (item) {
@@ -67,7 +68,7 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
   }
 
   async function removeItem(itemId: string) {
-    const itemsFiltrados = carrinho.items.filter((item) => item.camisa.idCamisa !== itemId);
+    const itemsFiltrados = carrinho.items.filter((item) => item.camisa.id !== itemId);
 
     if (itemsFiltrados.length < carrinho.items.length) {
       setCarrinho({ items: itemsFiltrados });
@@ -81,11 +82,12 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
 
     if (quantidade > camisa.estoque) {
-      throw new Error('Quantidade solicitada fora de estoque');
+      // throw new Error('Quantidade solicitada fora de estoque');
+      return;
     }
 
     const itemsCarrinho = [...carrinho.items];
-    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.idCamisa === itemId);
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
 
     if (item) {
       item.quantidade = quantidade;
