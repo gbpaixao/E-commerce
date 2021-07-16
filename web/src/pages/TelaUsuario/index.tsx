@@ -36,7 +36,6 @@ export function Usuario(): JSX.Element {
   const history = useHistory();
 
   const clienteId = 1;
-
   useEffect(() => {
     async function getPedido() {
       const response = await api.get(`/pedidos/${clienteId}`, undefined, false);
@@ -59,14 +58,15 @@ export function Usuario(): JSX.Element {
               marginLeft: '50px', marginTop: '0.5rem', marginBottom: '0.5rem', borderRadius: '120px', width: '140px', height: '140px',
             }}
           />
-          <Col style={{ minWidth: '150px' }}>
-            <b>{usuario.nome}</b>
-            <p>{usuario.telefone}</p>
-            <p>{usuario.email}</p>
-            <p>
-              {`${usuario.rua},
-              ${usuario.numero}
-              `}
+          <Col style={{ minWidth: '160px' }}>
+            <p style={{ fontWeight: 'bold', margin: 0 }}>{usuario.nome}</p>
+            <p style={{ margin: 0 }}>{usuario.telefone}</p>
+            <p style={{ margin: 0 }}>{usuario.email}</p>
+            <p style={{ margin: 0 }}>
+              {`${usuario.rua}, ${usuario.numero}`}
+            </p>
+            <p style={{ margin: 0 }}>
+              {`${usuario.cidade} - ${usuario.estado}`}
             </p>
           </Col>
 
