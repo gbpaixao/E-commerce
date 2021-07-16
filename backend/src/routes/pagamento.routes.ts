@@ -115,7 +115,7 @@ routes.post('/webhooks',async (req, res) => {
         codigoRastreio: `BR${Math.floor(Math.random() * 1000000)}`,
         formaEnvio: 'Correios',
         previsaoEntrega: new Date(previsaoEntrega),
-        status: 'Preparando envio',
+        status: 'loja',
         valorFrete: 30.5
       });
       
