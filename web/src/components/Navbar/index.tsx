@@ -10,8 +10,10 @@ import {
 } from 'react-bootstrap';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 export function Navbar(): JSX.Element {
+  const { usuario, setUsuario } = useUsuario();
   const history = useHistory();
 
   return (
@@ -55,7 +57,18 @@ export function Navbar(): JSX.Element {
           className="d-flex align-items-center justify-content-between"
           style={{ width: '12rem' }}
         >
-          <p className="mb-0">Usuário</p>
+          <p className="mb-0">
+            <button
+              onClick={() => history.push('/usuario')}
+              style={{
+                color: 'white', backgroundColor: 'transparent', border: 0, fontWeight: 'bold',
+              }}
+              type="button"
+            >
+              <a href=" " style={{ color: 'white' }}>{usuario.nome}</a>
+
+            </button>
+          </p>
 
           <Button
             style={{ background: 'transparent', border: 'none' }}

@@ -34,6 +34,16 @@ export default function CadastroUsuario(): JSX.Element {
       delete usuario.idUsuario;
       const response = await api.post('/usuario', {
         usuario,
+        endereco: {
+          rua: usuario.rua,
+          bairro: usuario.bairro,
+          numero: usuario.numero,
+          cep: usuario.cep,
+          complemento: usuario.complemento,
+          cidade: usuario.cidade,
+          estado: usuario.estado,
+          pais: usuario.pais,
+        },
       }, undefined, false);
 
       setUsuario(response.data.usuario);
@@ -137,6 +147,107 @@ export default function CadastroUsuario(): JSX.Element {
                 />
               </FormGroup> */}
 
+              <div className="d-flex flex-column align-items-center" style={{ margin: 0 }}>
+                <h6 className="mb-5">Endereço</h6>
+              </div>
+              <div style={{ margin: 0 }}>
+                <div className="d-flex">
+                  <div className="d-table pd-right-form" style={{ width: '70%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Rua"
+                        autoFocus
+                        value={usuario.rua}
+                        onChange={(event) => setUsuario({ ...usuario, rua: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-table pd-left-form" style={{ width: '30%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Número"
+                        value={usuario.numero}
+                        onChange={(event) => setUsuario({ ...usuario, numero: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+
+                <div className="d-flex">
+                  <div className="d-table w-50 pd-right-form">
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Bairro"
+                        autoFocus
+                        value={usuario.bairro}
+                        onChange={(event) => setUsuario({ ...usuario, bairro: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-table w-50 pd-left-form">
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Complemento"
+                        value={usuario.complemento}
+                        onChange={(event) => setUsuario({ ...usuario, complemento: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+
+                <div className="d-flex">
+                  <div className="d-table pd-right-form" style={{ width: '50%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Cidade"
+                        autoFocus
+                        value={usuario.cidade}
+                        onChange={(event) => setUsuario({ ...usuario, cidade: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-table pd-left-form" style={{ width: '50%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="CEP"
+                        maxLength={8}
+                        value={usuario.cep}
+                        onChange={(event) => setUsuario({ ...usuario, cep: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+
+                <div className="d-flex">
+                  <div className="d-table pd-right-form" style={{ width: '50%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Estado"
+                        autoFocus
+                        value={usuario.estado}
+                        onChange={(event) => setUsuario({ ...usuario, estado: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                  <div className="d-table pd-left-form" style={{ width: '50%' }}>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="País"
+                        value={usuario.pais}
+                        onChange={(event) => setUsuario({ ...usuario, pais: event.target.value })}
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+              </div>
               <div
                 className="d-flex flex-column justify-content-center"
               >

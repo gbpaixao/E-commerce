@@ -2,8 +2,8 @@ import { Endereco } from '../@types/Endereco';
 import database from '../database';
 
 class CreateEnderecoService {
+  
   async execute(endereco: Endereco) {
-    /* Usuario */
 
     const enderecoInsert = {
 

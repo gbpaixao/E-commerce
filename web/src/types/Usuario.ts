@@ -9,7 +9,4 @@ export interface Usuario extends Endereco {
   telefone: string;
   email: string;
   admin: boolean;
-  // rua: string;
-  // numero: string;
-  // bairro: string;
 }
