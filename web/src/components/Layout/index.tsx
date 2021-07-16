@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useUsuario } from '../../contexts/UsuarioContext';
 import { MiniNavbar } from '../MiniNavbar';
 import { Navbar } from '../Navbar';
 
@@ -7,7 +8,8 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps): JSX.Element {
-  const admin = true;
+  const { usuario } = useUsuario();
+  const { admin } = usuario;
   return (
     <div>
       <Navbar />

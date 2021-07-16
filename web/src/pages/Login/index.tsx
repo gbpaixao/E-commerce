@@ -25,7 +25,7 @@ interface Auth {
 export function Login(): JSX.Element {
   const { setUsuario } = useUsuario();
   useEffect(() => {
-    localStorage.removeItem('authToken');
+    localStorage.clear();
   }, []);
 
   const [state, setState] = useState({
