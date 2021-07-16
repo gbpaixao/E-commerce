@@ -28,10 +28,14 @@ export function Carrinho(): JSX.Element {
 
     try {
       const response = await api.post('/pagamento/checkout', {
-        unit_amount: unitAmount * 100,
-        product_data: {
-          name: 'test',
-          description: 'pedido de test',
+        carrinho: carrinho.items,
+        idCliente: 1,
+        priceData: {
+          unit_amount: unitAmount * 100,
+          product_data: {
+            name: 'test',
+            description: 'pedido de test',
+          },
         },
       });
 
