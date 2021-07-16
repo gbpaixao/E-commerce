@@ -79,9 +79,6 @@ export function AcompanharPedido(): JSX.Element {
 
   const { pedido, setPedido } = usePedido();
 
-  const entrega = new Date(pedido.previsaoEntrega);
-  const compra = new Date(pedido.previsaoEntrega);
-
   const history = useHistory();
 
   const { usuario } = useUsuario();
@@ -90,10 +87,17 @@ export function AcompanharPedido(): JSX.Element {
   console.log('pedidoId', pedidoId);
   // const pedidoId = 15;
 
+  const formatData = (data: string) => {
+    if (!data) return '';
+
+    const dataOriginal = new Date(data);
+    return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(dataOriginal);
+  };
+
   useEffect(() => {
     async function getPedido() {
-      const response = await api.get(`/pedidos/${clienteId}/${pedidoId}`);
-      console.log(response);
+      const response = await api.get(`/pedidos/${1}/${pedidoId}`);
+      console.log('response', response);
       setPedido(response.data);
     }
     getPedido();
@@ -123,7 +127,7 @@ export function AcompanharPedido(): JSX.Element {
           <Col style={{ minWidth: '12rem' }}>
             <p>Previsão de entrega</p>
             <b>
-              {Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
+              {formatData(pedido.previsaoEntrega)}
             </b>
           </Col>
           <Col style={{ minWidth: '8rem' }}>
@@ -227,7 +231,7 @@ export function AcompanharPedido(): JSX.Element {
             >
               {pedido.status === 'loja' && (
               <p>
-                  {compra }
+                  {formatData(pedido.dataCompra)}
                   {'\n'}
                 23:59
 
@@ -236,7 +240,7 @@ export function AcompanharPedido(): JSX.Element {
               {pedido.status === 'correios'
               && (
               <p>
-                  {compra}
+                  {formatData(pedido.dataCompra)}
                   {'\n'}
                 23:59
                 {' '}
@@ -247,7 +251,7 @@ export function AcompanharPedido(): JSX.Element {
               {pedido.status === 'entregue'
                && (
                <p>
-                 {compra}
+                 {formatData(pedido.dataCompra)}
                  {'\n'}
                  23:59
                  {' '}
@@ -323,7 +327,7 @@ export function AcompanharPedido(): JSX.Element {
             >
               <h5> Data de compra </h5>
               <p>
-                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(compra)}
+                {formatData(pedido.dataCompra)}
               </p>
             </div>
 
@@ -335,7 +339,7 @@ export function AcompanharPedido(): JSX.Element {
             >
               <h5> Previsão de entrega </h5>
               <p>
-                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
+                {formatData(pedido.previsaoEntrega)}
 
               </p>
             </div>
