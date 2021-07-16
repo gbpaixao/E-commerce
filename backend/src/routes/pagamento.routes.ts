@@ -6,6 +6,11 @@ import { CreateItemPedidoService } from '../services/CreateItemPedidoService';
 import { CreatePedidoService } from '../services/CreatePedidoService';
 import { CreateCarrinhoService } from '../services/CreateCarrinhoService';
 import { CreatePagamentoService } from '../services/CreatePagamentoService';
+import { GetIdsService } from '../services/GetIdsService';
+import { UpdateCamisaEstoqueService } from '../services/UpdateCamisaEstoqueService';
+import { ListCamisasService } from '../services/ListCamisasService';
+import { CreateEntregaService } from '../services/CreateEntregaService';
+import { UpdatePedidoService } from '../services/UpdatePedidoService';
 
 dotenv.config();
 
@@ -80,16 +85,45 @@ routes.post('/checkout', ensureAuthenticated, async (req, res) => {
 });
 
 routes.post('/webhooks',async (req, res) => {
-  console.log('evento recebido')
+  const getIdsService = new GetIdsService();
+  const updateCamisaEstoqueService = new UpdateCamisaEstoqueService();
+  const listCamisasService = new ListCamisasService();
+  const createEntregaService = new CreateEntregaService();
+  const updatePedidoService = new UpdatePedidoService();
   
   const event: Stripe.Event = req.body;
 
   switch(event.type) {
     case 'checkout.session.completed': {
-      const checkoutSession = event.data.object;
+      const checkoutSession = event.data.object as Stripe.Charge;
 
-      console.log('Event: ', checkoutSession);
+      const ids = await getIdsService.execute(checkoutSession.id);
+
+      for (const id of ids) {
+        const camisa = await listCamisasService.execute(id.Camisa_idCamisa)
+        
+        await updateCamisaEstoqueService.execute(
+          id.Camisa_idCamisa, 
+          camisa.estoque - id.quantidade
+        );
+      }
+
+      const diaParaSegundos = 24 * 60 * 60;
+      const previsaoEntrega = new Date().getTime() + (diaParaSegundos * 1000 * 15) ;
       
+      const Entrega_idEntrega = await createEntregaService.execute({
+        codigoRastreio: `BR${Math.floor(Math.random() * 1000000)}`,
+        formaEnvio: 'Correios',
+        previsaoEntrega: new Date(previsaoEntrega),
+        status: 'Preparando envio',
+        valorFrete: 30.5
+      });
+      
+      await updatePedidoService.execute(ids[0].idPedido, {
+        status: 'Ativo',
+        Entrega_idEntrega
+      });
+
       break;
     }
   }
