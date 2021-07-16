@@ -14,7 +14,7 @@ class ListAllPedidosService {
       .join('Camisa', 'itemPedido.Camisa_idCamisa', 'Camisa.idCamisa')
       .select(
         'idPedido',
-        'dataCompra',
+        'dataCompra as previsaoEntrega',
         'Pedido.valorTotal as valor',
         'Entrega.status' //loja, correios, entregue)
       )

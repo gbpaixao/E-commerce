@@ -26,6 +26,7 @@ export function Carrinho(): JSX.Element {
             <h3 style={{ marginLeft: '12.75rem' }}>QTD</h3>
             <h3 style={{ marginLeft: '13.5rem' }}>SUBTOTAL</h3>
           </div>
+
           {carrinho.items?.map((item) => (
             <div key={item.camisa.id} className="d-flex align-items-center">
               <Image

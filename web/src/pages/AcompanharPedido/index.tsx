@@ -12,6 +12,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { FormEvent, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Layout } from '../../components/Layout';
+import ItemsAmount from '../../components/ItemsAmount';
+import { useCarrinho } from '../../contexts/CarrinhoContext';
 
 import { formatCurrency } from '../../utils/utils';
 import { getRandomTshirt } from '../../server/getRandomTshirt';
@@ -77,15 +79,8 @@ export function AcompanharPedido(): JSX.Element {
 
   const { pedido, setPedido } = usePedido();
 
-  const dd = pedido.previsaoEntrega.substr(8, 2);
-  const mm = pedido.previsaoEntrega.substr(5, 2);
-  const yyyy = pedido.previsaoEntrega.substr(0, 4);
-  const entrega = `${dd}/${mm}/${yyyy}`;
-
-  const dd1 = pedido.dataCompra.substr(8, 2);
-  const mm1 = pedido.dataCompra.substr(5, 2);
-  const yyyy1 = pedido.dataCompra.substr(0, 4);
-  const compra = `${dd1}/${mm1}/${yyyy1}`;
+  const entrega = new Date(pedido.previsaoEntrega);
+  const compra = new Date(pedido.previsaoEntrega);
 
   const history = useHistory();
 
@@ -128,7 +123,7 @@ export function AcompanharPedido(): JSX.Element {
           <Col style={{ minWidth: '12rem' }}>
             <p>Previsão de entrega</p>
             <b>
-              {entrega}
+              {Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
             </b>
           </Col>
           <Col style={{ minWidth: '8rem' }}>
@@ -327,7 +322,9 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Data de compra </h5>
-              <p>{compra}</p>
+              <p>
+                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(compra)}
+              </p>
             </div>
 
             <div
@@ -337,7 +334,10 @@ export function AcompanharPedido(): JSX.Element {
               }}
             >
               <h5> Previsão de entrega </h5>
-              <p>{entrega}</p>
+              <p>
+                { Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(entrega)}
+
+              </p>
             </div>
           </div>
 
