@@ -1,4 +1,4 @@
-import database from '../database'
+import database from '../database';
 
 class ListCamisasService {
   async execute(id: number) {
@@ -15,10 +15,10 @@ class ListCamisasService {
         'tipo'
       )
       .from('Camisa')
-      .where('idCamisa', id)
+      .where('idCamisa', id);
 
-    return camisas[0]
+    return camisas[0];
   }
 }
 
-export { ListCamisasService }
+export { ListCamisasService };
