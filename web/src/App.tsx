@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import Routes from './routes/index.routes';
-import './server';
+// import './server';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure({
@@ -10,7 +10,6 @@ toast.configure({
 });
 function App(): JSX.Element {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <Routes />
   );
 }

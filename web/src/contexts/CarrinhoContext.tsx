@@ -38,22 +38,23 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
 
   async function addItem(itemId: string, itemCarrinho: ItemCarrinho) {
     const itemsCarrinho = [...carrinho.items];
-    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.idCamisa === itemId);
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
 
     const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
 
     const quantidadeAtual = item?.quantidade || 0;
     const quantidade = quantidadeAtual + 1;
 
-    if (quantidade > camisa[0].estoque) {
-      throw new Error('Quantidade solicitada fora de estoque');
+    if (quantidade > camisa.estoque) {
+      // throw new Error('Quantidade solicitada fora de estoque');
+      return;
     }
 
     if (item) {
       item.quantidade = quantidade;
     } else {
       const novoItem: Item = {
-        camisa: camisa[0],
+        camisa,
         ...itemCarrinho,
       };
 
@@ -67,7 +68,7 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
   }
 
   async function removeItem(itemId: string) {
-    const itemsFiltrados = carrinho.items.filter((item) => item.camisa.idCamisa !== itemId);
+    const itemsFiltrados = carrinho.items.filter((item) => item.camisa.id !== itemId);
 
     if (itemsFiltrados.length < carrinho.items.length) {
       setCarrinho({ items: itemsFiltrados });
@@ -81,11 +82,12 @@ export function CarrinhoContextProvider({ children }: ContextChildrenProps):JSX.
     const { data: camisa } = await api.get(`/camisas/${itemId}`, undefined, false);
 
     if (quantidade > camisa.estoque) {
-      throw new Error('Quantidade solicitada fora de estoque');
+      // throw new Error('Quantidade solicitada fora de estoque');
+      return;
     }
 
     const itemsCarrinho = [...carrinho.items];
-    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.idCamisa === itemId);
+    const item = itemsCarrinho.find((carrinhoItem) => carrinhoItem.camisa.id === itemId);
 
     if (item) {
       item.quantidade = quantidade;

@@ -1,24 +1,24 @@
-import database from '../database'
+import database from '../database';
 
 class ListCamisasService {
   async execute(id: number) {
     const camisas = await database
       .clone()
       .select(
-        'idCamisa',
+        // 'idCamisa',
+        'idCamisa as id',
         'nome as nomeCamisa',
         'descricao',
         'valor',
         'estoque',
-        'tamanho'
+        'tamanho',
+        'tipo'
       )
       .from('Camisa')
-      .where('idCamisa', id)
+      .where('idCamisa', id);
 
-    console.log(`camisas`, camisas)
-
-    return camisas
+    return camisas[0];
   }
 }
 
-export { ListCamisasService }
+export { ListCamisasService };

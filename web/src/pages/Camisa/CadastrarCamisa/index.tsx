@@ -109,11 +109,11 @@ export default function CadastroCamisa(): JSX.Element {
                 <ItemsAmount
                   counter={estoque}
                   setCounter={
-                (qtde) => {
-                  setEstoque(qtde);
-                  setCamisa({ ...camisa, estoque: qtde });
-                }
-            }
+                    (qtde) => {
+                      setEstoque(qtde);
+                      setCamisa({ ...camisa, estoque: qtde });
+                    }
+                  }
                 />
               </Form.Group>
 
@@ -132,7 +132,7 @@ export default function CadastroCamisa(): JSX.Element {
                 <Form.File
                   id="custom-file"
                   label="Escolher uma imagem"
-                  onChange={(e:any) => console.log(e.target.value)}
+                  onChange={(e: any) => console.log(e.target.value)}
                   custom
                 />
               </Form.Group>
@@ -171,7 +171,7 @@ export default function CadastroCamisa(): JSX.Element {
                 <Button
                   type="submit"
                   onClick={handleSubmit}
-                  style={{ backgroundColor: '#5227CC', borderColor: '#5227CC', width: '150px' }}
+                  style={{ backgroundColor: '#5227CC', borderColor: 'rgba(73, 80, 87, 1)', width: '150px' }}
                   disabled={isSubmitting}
                 >
                   {isSubmitting

@@ -1,26 +1,30 @@
-import express, { Request, Response } from 'express'
-import routes from './routes/index.routes'
-import cors from 'cors'
+import express, { NextFunction, Request, Response } from 'express';
+import 'express-async-errors';
+import cors from 'cors';
 
-const server = express()
+import routes from './routes/index.routes';
 
-server.use(cors())
-server.use(express.json())
-server.use(routes)
+const server = express();
 
-server.use((err: Error, request: Request, response: Response) => {
-  if (err instanceof Error) {
-    return response.status(400).json({
-      error: err.message,
-    })
+server.use(cors());
+server.use(express.json());
+server.use(routes);
+
+server.use(
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
+    if (err instanceof Error) {
+      return response.status(400).json({
+        error: err.message,
+      });
+    }
+
+    return response.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+    });
   }
+);
 
-  return response.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
-  })
-})
+server.listen(process.env.PORT || 3333, () => console.log('Api rodando.'));
 
-server.listen(process.env.PORT || 3333, () => console.log('Api rodando.'))
-
-export default server
+export default server;
