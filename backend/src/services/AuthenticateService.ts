@@ -46,6 +46,19 @@ class AuthenticateService {
         .where({ email })
     )[0];
 
+    const adminDB = await database
+      .clone()
+      .join(
+        'Administrador',
+        'Administrador.Usuario_idUsuario',
+        'Usuario.idUsuario'
+      )
+      .select()
+      .from('Usuario')
+      .where({ email });
+
+    const isAdmin = adminDB.length !== 0 ? true : false;
+
     if (!user) {
       console.log('merda');
       throw new Error('Invalid email/password');
@@ -79,6 +92,7 @@ class AuthenticateService {
         cidade: user.cidade,
         estado: user.estado,
         pais: user.pais,
+        admin: isAdmin,
       },
     };
   }
