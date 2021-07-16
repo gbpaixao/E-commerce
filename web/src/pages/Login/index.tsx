@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import loginImg from '../../assets/login.jpg';
 import '../CadastroCliente/styles.css';
 import api from '../../services/api';
+import { useUsuario } from '../../contexts/UsuarioContext';
 
 interface Auth {
   email: string;
@@ -22,6 +23,7 @@ interface Auth {
 }
 
 export function Login(): JSX.Element {
+  const { setUsuario } = useUsuario();
   useEffect(() => {
     localStorage.removeItem('authToken');
   }, []);
@@ -45,8 +47,8 @@ export function Login(): JSX.Element {
         password: state.password,
       });
 
-      const { token } = response.data;
-      console.log('token', token);
+      const { token, user } = response.data;
+      setUsuario(user);
       localStorage.setItem('authToken', String(token));
 
       history.push('/home');

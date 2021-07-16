@@ -17,7 +17,7 @@ class ListPedidoService {
         'idPedido',
         'dataCompra',
         'Pedido.valorTotal as valor',
-        // 'Pedido.status', // ativo, finalizado e cancelado
+        // 'Pedido.status', // ativo, finalizado e o outro que eu esqueci
         'Camisa.nome as nomeCamisa',
         'previsaoEntrega',
         'Entrega.status', //loja, correios, entregue)
